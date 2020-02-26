@@ -4,20 +4,19 @@
 <head>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-
    <!-- CSRF Token -->
    <meta name="csrf-token" content="{{ csrf_token() }}">
-
    <title>Farmacia</title>
+   
    <!-- Fonts -->
    <link href="{{ asset('../css/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-   <link
-      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet">
-
+   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
    <!-- Styles -->
    <link href="{{ asset('../css/sb-admin-2.min.css') }}" rel="stylesheet">
+   <link href="{{ asset('../css/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+   <link href="{{ asset('../css/myappcss.css') }}" rel="stylesheet">
+   
 </head>
 
 <body id="page-top">
@@ -28,11 +27,12 @@
       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
          <!-- Sidebar - Brand -->
-         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/home') }}">
             <div class="sidebar-brand-icon rotate-n-15">
-               <i class="fas fa-laugh-wink"></i>
+               <i class="fas fa-first-aid"></i>
+               <!-- <img src="../images/Logo.jpg" alt=""> -->
             </div>
-            <div class="sidebar-brand-text mx-3">Farmacia</div>
+            <div class="sidebar-brand-text mx-3">interGenírica</div>
          </a>
 
          <!-- Divider -->
@@ -40,7 +40,7 @@
 
          <!-- Nav Item - Dashboard -->
          <li class="nav-item active">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{ url('/home') }}">
                <i class="fas fa-home"></i>
                <span>Bienvenido</span></a>
          </li>
@@ -57,7 +57,7 @@
          <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                aria-expanded="true" aria-controls="collapseTwo">
-               <i class="fas fa-fw fa-cog"></i>
+               <i class="fas fa-dollar-sign"></i>
                <span>Ventas</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -73,7 +73,7 @@
          <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                aria-expanded="true" aria-controls="collapseUtilities">
-               <i class="fas fa-fw fa-wrench"></i>
+               <i class="fas fa-file-alt"></i>
                <span>Reportes</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -93,7 +93,7 @@
 
          <!-- Heading -->
          <div class="sidebar-heading">
-            Addons
+            Catalogo
          </div>
 
          <!-- Nav Item - Pages Collapse Menu -->
@@ -101,7 +101,7 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                aria-expanded="true" aria-controls="collapsePages">
                <i class="fas fa-fw fa-folder"></i>
-               <span>Pages</span>
+               <span>En existencia</span>
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
@@ -121,14 +121,14 @@
          <li class="nav-item">
             <a class="nav-link" href="charts.html">
                <i class="fas fa-fw fa-chart-area"></i>
-               <span>Charts</span></a>
+               <span>No disponibles</span></a>
          </li>
 
          <!-- Nav Item - Tables -->
          <li class="nav-item">
             <a class="nav-link" href="tables.html">
                <i class="fas fa-fw fa-table"></i>
-               <span>Tables</span></a>
+               <span>Caducados</span></a>
          </li>
 
          <!-- Divider -->
@@ -159,7 +159,7 @@
                <!-- Topbar Search -->
                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                   <div class="input-group">
-                     <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                     <input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..."
                         aria-label="Search" aria-describedby="basic-addon2">
                      <div class="input-group-append">
                         <button class="btn btn-primary" type="button">
@@ -207,7 +207,7 @@
                      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                         aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header">
-                           Alerts Center
+                           Notificaciones pendientes
                         </h6>
                         <a class="dropdown-item d-flex align-items-center" href="#">
                            <div class="mr-3">
@@ -216,8 +216,8 @@
                               </div>
                            </div>
                            <div>
-                              <div class="small text-gray-500">December 12, 2019</div>
-                              <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                              <div class="small text-gray-500">Enero 30, 2020</div>
+                              <span class="font-weight-bold">Venta realizada con exito!</span>
                            </div>
                         </a>
                         <a class="dropdown-item d-flex align-items-center" href="#">
@@ -227,8 +227,8 @@
                               </div>
                            </div>
                            <div>
-                              <div class="small text-gray-500">December 7, 2019</div>
-                              $290.29 has been deposited into your account!
+                              <div class="small text-gray-500">Enero 30, 2020</div>
+                              Venta cancelada por el cliente.
                            </div>
                         </a>
                         <a class="dropdown-item d-flex align-items-center" href="#">
@@ -238,8 +238,8 @@
                               </div>
                            </div>
                            <div>
-                              <div class="small text-gray-500">December 2, 2019</div>
-                              Spending Alert: We've noticed unusually high spending for your account.
+                              <div class="small text-gray-500">Enero 30, 2020</div>
+                              Ya no contamos con presentacion tabletas para el producto XXXXXXXXXXXXX, favor de pedir a almacen que resurtan la sucursal 1.
                            </div>
                         </a>
                         <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
@@ -258,7 +258,7 @@
                      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                         aria-labelledby="messagesDropdown">
                         <h6 class="dropdown-header">
-                           Message Center
+                           Mensajes recibidos
                         </h6>
                         <a class="dropdown-item d-flex align-items-center" href="#">
                            <div class="dropdown-list-image mr-3">
@@ -266,9 +266,8 @@
                               <div class="status-indicator bg-success"></div>
                            </div>
                            <div class="font-weight-bold">
-                              <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've
-                                 been having.</div>
-                              <div class="small text-gray-500">Emily Fowler · 58m</div>
+                              <div class="text-truncate">Hola vendedor, hoy podras cerrar hasta las 10:00 pm</div>
+                              <div class="small text-gray-500">Administrador · 58m</div>
                            </div>
                         </a>
                         <a class="dropdown-item d-flex align-items-center" href="#">
@@ -277,9 +276,8 @@
                               <div class="status-indicator"></div>
                            </div>
                            <div>
-                              <div class="text-truncate">I have the photos that you ordered last month, how would you
-                                 like them sent to you?</div>
-                              <div class="small text-gray-500">Jae Chun · 1d</div>
+                              <div class="text-truncate">No se te olvide que el dia lunes es dia festivo, no vamos a laborar</div>
+                              <div class="small text-gray-500">Suc 2 · 1d</div>
                            </div>
                         </a>
                         <a class="dropdown-item d-flex align-items-center" href="#">
@@ -288,9 +286,8 @@
                               <div class="status-indicator bg-warning"></div>
                            </div>
                            <div>
-                              <div class="text-truncate">Last month's report looks great, I am very happy with the
-                                 progress so far, keep up the good work!</div>
-                              <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                              <div class="text-truncate">Hola que hace!</div>
+                              <div class="small text-gray-500">Suc 4 · 2d</div>
                            </div>
                         </a>
                         <a class="dropdown-item d-flex align-items-center" href="#">
@@ -299,8 +296,7 @@
                               <div class="status-indicator bg-success"></div>
                            </div>
                            <div>
-                              <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me
-                                 that people say this to all dogs, even if they aren't good...</div>
+                              <div class="text-truncate">Ya estoy por cerrar el almacen, alguien necesita algo¿?.</div>
                               <div class="small text-gray-500">Chicken the Dog · 2w</div>
                            </div>
                         </a>
@@ -327,7 +323,7 @@
                         aria-haspopup="true" aria-expanded="false">
                         <span class="mr-2 d-none d-lg-inline text-gray-600 small">Bienvenido
                            {{ Auth::user()->sUsrName}}</span>
-                        <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                        <img class="img-profile rounded-circle" src="{{URL::asset('../images/icon-user.png')}}">
                      </a>
                      <!-- Dropdown - User Information -->
                      <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -347,13 +343,11 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                           Logout
+                           Cerrar sesión
                         </a>
                      </div>
                   </li>
                   @endguest
-
-
                </ul>
 
             </nav>
@@ -364,8 +358,6 @@
                <main class="py-4">
                   @yield('content')
                </main>
-             
-
             </div>
             <!-- /.container-fluid -->
 
@@ -376,7 +368,7 @@
          <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                <div class="copyright text-center my-auto">
-                  <span>Copyright &copy; Your Website 2019</span>
+                  <span>Copyright &copy; inerGeneríca farmacia 2020 - 2020</span>
                </div>
             </div>
          </footer>
@@ -417,25 +409,27 @@
       </div>
    </div>
 
-   <!-- Bootstrap core JavaScript-->
+   <!-- Js template-->
    <script src="{{ asset('../js/vendor/jquery/jquery.min.js') }}" defer></script>
+
+   <script src="{{ asset('../js/sb-admin-2.js') }}" defer></script>
+
    <script src="{{ asset('../js/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
 
    <!-- Core plugin JavaScript-->
    <script src="{{ asset('../js/vendor/jquery-easing/jquery.easing.min.js') }}" defer></script>
 
+   <script src="{{ asset('../js/myappscripts.js') }}" defer></script>
+
    <!-- Custom scripts for all pages-->
-   <script src="{{ asset('../js/sb-admin-2.js') }}" defer></script>
+   <script src="{{ asset('../js/demo/datatables-demo.js') }}" defer></script>
+   <script src="{{ asset('../vendor/datatables/jquery.dataTables.min.js') }}" defer></script>
+   <script src="{{ asset('../vendor/datatables/dataTables.bootstrap4.min.js') }}" defer></script>
 
-   <!-- Page level plugins -->
-   <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
-
-   <!-- Page level custom scripts -->
-   <!-- <script src="js/demo/chart-area-demo.js"></script> -->
-   <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
-
-
-
+   <!-- Chosen JS -->
+   <!-- <script src="{{ asset('../chosen/js/jquery-3.2.1.min.js') }}" defer></script> -->
+   <!-- <script src="{{ asset('../chosen/js/chosen.jquery.js') }}" defer></script>
+   <script src="{{ asset('../chosen/js/prism.js') }}" defer></script>
+   <script src="{{ asset('../chosen/js/init.js') }}" defer></script> -->
 </body>
-
 </html>

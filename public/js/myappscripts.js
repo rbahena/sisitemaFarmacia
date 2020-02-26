@@ -18,3 +18,16 @@ function goResetPassword() {
         $("#resetPwdEmail-form").show();
     }
 }
+
+function openModalNewVenta() {
+    $("#salesModal").modal("show");
+}
+
+function agregarArticuloModal() {
+    $("#nuevoArticuloM").modal("show");
+}
+
+
+$("#divInventario").click(function(e) {
+    $("#verInventario").click();
+});

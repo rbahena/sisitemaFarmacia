@@ -67,5 +67,9 @@ input.largeCheck {
     height: 20px;
 }
 
+.cursorPointer {
+    cursor: pointer;
+}
+
 
 /*Template styles*/
