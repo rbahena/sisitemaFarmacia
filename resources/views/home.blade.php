@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
+
 <!-- Page Heading -->
 @guest
 <li class="nav-item">
    <a class="nav-link" href="{{ url('/') }}">{{ __('Login') }}</a>
-   <!-- <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a> -->
 </li>
 @if (Route::has('register'))
 <li class="nav-item">
@@ -18,6 +18,7 @@
          class="fas fa-download fa-sm text-white-50"></i> Ver reportes</a>
 </div>
 @endguest
+
 <!-- Content Row -->
 <div class="row">
 
@@ -36,47 +37,37 @@
       </div>
    </div>
 
-   <!-- Total de ventas Card -->
+   <!-- Total de ver inventario -->
    <div class="col-xl-3 col-md-6 mb-4" id="divInventario">
       <div class="card border-left-success shadow h-100 py-2">
          <div class="card-body">
             <div class="row no-gutters align-items-center">
                <div class="col mr-2 text-center">
-                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1 text-center"> <a  href="{{ url('/inventario') }}">Ver inventario</a>
+                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1 text-center"><a href="{{ url('/verInventario')}}" onclick='mostrarLoading()'>Ver inventario</a>
                   </div>
-                  <a class="fas fa-clipboard-list fa-2x text-gray-300" href="{{ url('/inventario') }}"></a>
+                  <a class="fas fa-clipboard-list fa-2x text-gray-300" href="{{ url('/verInventario') }}"></a>
                </div>
             </div>
          </div>
       </div>
    </div>
 
-   <!--Ventas completadas Card -->
+   <!-- Ver historial de ventas -->
    <div class="col-xl-3 col-md-6 mb-4">
       <div class="card border-left-info shadow h-100 py-2">
          <div class="card-body">
             <div class="row no-gutters align-items-center">
                <div class="col mr-2 text-center">
-                  <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Ver historial de ventas</div>
-                  <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                  <!-- <div class="row no-gutters align-items-center">
-                     <div class="col-auto">
-                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">203</div>
-                     </div>
-                     <div class="col">
-                        <div class="progress progress-sm mr-2">
-                           <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50"
-                              aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                     </div>
-                  </div> -->
+                  <div class="text-xs font-weight-bold text-info text-uppercase mb-1"><a  href="{{ url('/detalleArticulo') }}">AGREGAR ARTICULO</a>
+                  </div>
+                  <a class="fas fa-clipboard-list fa-2x text-gray-300" href="{{ url('/detalleArticulo') }}"></a>
                </div>
             </div>
          </div>
       </div>
    </div>
 
-   <!-- Ventas canceladas Card Example -->
+   <!-- Ventas canceladas -->
    <div class="col-xl-3 col-md-6 mb-4">
       <div class="card border-left-warning shadow h-100 py-2">
          <div class="card-body">
@@ -145,4 +136,11 @@
 </div>
 <!-- /New sales modal -->
 
+@endsection
+@section('script')
+<script type="text/javascript">  
+function mostrarLoading() {
+    $('#loading').show();
+}
+</script>
 @endsection

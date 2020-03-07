@@ -7,16 +7,31 @@
    <!-- CSRF Token -->
    <meta name="csrf-token" content="{{ csrf_token() }}">
    <title>Farmacia</title>
-   
+
    <!-- Fonts -->
    <link href="{{ asset('../css/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
    <!-- Styles -->
    <link href="{{ asset('../css/sb-admin-2.min.css') }}" rel="stylesheet">
    <link href="{{ asset('../css/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
    <link href="{{ asset('../css/myappcss.css') }}" rel="stylesheet">
-   
+
+   <!-- Jquery para poder usar ajax-->
+   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+   <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+   <script src="https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"></script>
+
+   <script type="text/javascript">
+   $(document).ready(function() {
+      $('#loading').hide();
+
+      function mostrarMensaje(messageTitle, messageBody) {
+         $("#messageTitleModal").html(messageTitle);
+         $("#messageBodyModal").html(messageBody);
+      };
+   });
+   </script>
 </head>
 
 <body id="page-top">
@@ -239,7 +254,8 @@
                            </div>
                            <div>
                               <div class="small text-gray-500">Enero 30, 2020</div>
-                              Ya no contamos con presentacion tabletas para el producto XXXXXXXXXXXXX, favor de pedir a almacen que resurtan la sucursal 1.
+                              Ya no contamos con presentacion tabletas para el producto XXXXXXXXXXXXX, favor de pedir a
+                              almacen que resurtan la sucursal 1.
                            </div>
                         </a>
                         <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
@@ -276,7 +292,8 @@
                               <div class="status-indicator"></div>
                            </div>
                            <div>
-                              <div class="text-truncate">No se te olvide que el dia lunes es dia festivo, no vamos a laborar</div>
+                              <div class="text-truncate">No se te olvide que el dia lunes es dia festivo, no vamos a
+                                 laborar</div>
                               <div class="small text-gray-500">Suc 2 · 1d</div>
                            </div>
                         </a>
@@ -355,10 +372,29 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
+               <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 class="modal-title" id="messageTitleModal"></h5>
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                           </button>
+                        </div>
+                        <div class="modal-body" id="messageBodyModal">
+                        </div>
+                        <div class="modal-footer">
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Entendido!</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="loading" class="Loader"></div>
                <main class="py-4">
                   @yield('content')
                </main>
             </div>
+            @yield('script')
             <!-- /.container-fluid -->
 
          </div>
@@ -417,12 +453,12 @@
    <script src="{{ asset('../js/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
 
    <!-- Core plugin JavaScript-->
-   <script src="{{ asset('../js/vendor/jquery-easing/jquery.easing.min.js') }}" defer></script>
+   <!-- <script src="{{ asset('../js/vendor/jquery-easing/jquery.easing.min.js') }}" defer></script> -->
 
-   <script src="{{ asset('../js/myappscripts.js') }}" defer></script>
+   <!-- <script src="{{ asset('../js/myappscripts.js') }}" defer></script> -->
 
    <!-- Custom scripts for all pages-->
-   <script src="{{ asset('../js/demo/datatables-demo.js') }}" defer></script>
+   <!-- <script src="{{ asset('../js/demo/datatables-demo.js') }}" defer></script> -->
    <script src="{{ asset('../vendor/datatables/jquery.dataTables.min.js') }}" defer></script>
    <script src="{{ asset('../vendor/datatables/dataTables.bootstrap4.min.js') }}" defer></script>
 
@@ -431,5 +467,13 @@
    <!-- <script src="{{ asset('../chosen/js/chosen.jquery.js') }}" defer></script>
    <script src="{{ asset('../chosen/js/prism.js') }}" defer></script>
    <script src="{{ asset('../chosen/js/init.js') }}" defer></script> -->
+
+   <script type="text/javascript">
+   function mostrarMensaje(messageTitle, messageBody) {
+      $("#messageTitleModal").html(messageTitle);
+      $("#messageBodyModal").html(messageBody);
+      $("#messageModal").modal("show");
+   };
+   </script>
 </body>
 </html>

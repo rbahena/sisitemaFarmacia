@@ -14,4 +14,8 @@ class articulo extends Model
     {
         return $this->belongsTo('App\Models\departamento', 'fkIdDepartamento');
     }
+    public function relLabArticulo()
+    {
+        return $this->belongsTo('App\Models\departamento', 'fkIdDepartamento');
+    }
 }
