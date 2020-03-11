@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>Sistema farmacia</title>
+   <title>Intergenerica</title>
    <!--Styles-->
-   <link href="{{ asset('../css/myappcss.css') }}" rel="stylesheet">
-   <!-- Fonts -->
+   <link href="{{ asset('../css/welcomeStyle.css') }}" rel="stylesheet">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
    <!--Scripts-->
-   <script src="{{ asset('../js/myappscripts.js') }}"></script>
-   <script src="https://use.fontawesome.com/b97719d116.js"></script>
+   <script src="{{ asset('../js/welcomeScript.js') }}"></script>
    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-   </script>
+      integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 </head>
 
-<body> 
-   <div class="mid-class body">
+<body>
+<div class="mid-class body">
       <!--Se implementa el Login-->
       <div class="container" id="login-form">
          <form method="POST" action="{{ route('login') }}" class="form-group center">
@@ -183,7 +180,7 @@
             </div>
             <br>
             <br>
-            <small>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</small>
+            <!-- <small>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</small> -->
          </form>
          <!--/Se implementa el registro de usuarios / empresas-->
       </div>

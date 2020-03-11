@@ -11,27 +11,17 @@
    <!-- Fonts -->
    <link href="{{ asset('../css/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
 
-   <!-- Styles -->
+   <!-- Css -->
    <link href="{{ asset('../css/sb-admin-2.min.css') }}" rel="stylesheet">
    <link href="{{ asset('../css/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-   <link href="{{ asset('../css/myappcss.css') }}" rel="stylesheet">
+   <link href="{{ asset('../css/layoutStyle.css') }}" rel="stylesheet">
 
    <!-- Jquery para poder usar ajax-->
    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
    <script src="https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"></script>
+   <script src="{{ asset('../js/layoutScript.js') }}"></script>
 
-   <script type="text/javascript">
-   $(document).ready(function() {
-      $('#loading').hide();
-
-      function mostrarMensaje(messageTitle, messageBody) {
-         $("#messageTitleModal").html(messageTitle);
-         $("#messageBodyModal").html(messageBody);
-      };
-   });
-   </script>
 </head>
 
 <body id="page-top">
@@ -340,7 +330,7 @@
                         aria-haspopup="true" aria-expanded="false">
                         <span class="mr-2 d-none d-lg-inline text-gray-600 small">Bienvenido
                            {{ Auth::user()->sUsrName}}</span>
-                        <img class="img-profile rounded-circle" src="{{URL::asset('../images/icon-user.png')}}">
+                        <img class="img-profile rounded-circle" src="{{URL::asset('../images/avatar.png')}}">
                      </a>
                      <!-- Dropdown - User Information -->
                      <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -447,33 +437,9 @@
 
    <!-- Js template-->
    <script src="{{ asset('../js/vendor/jquery/jquery.min.js') }}" defer></script>
-
    <script src="{{ asset('../js/sb-admin-2.js') }}" defer></script>
-
    <script src="{{ asset('../js/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
-
-   <!-- Core plugin JavaScript-->
-   <!-- <script src="{{ asset('../js/vendor/jquery-easing/jquery.easing.min.js') }}" defer></script> -->
-
-   <!-- <script src="{{ asset('../js/myappscripts.js') }}" defer></script> -->
-
-   <!-- Custom scripts for all pages-->
-   <!-- <script src="{{ asset('../js/demo/datatables-demo.js') }}" defer></script> -->
    <script src="{{ asset('../vendor/datatables/jquery.dataTables.min.js') }}" defer></script>
    <script src="{{ asset('../vendor/datatables/dataTables.bootstrap4.min.js') }}" defer></script>
-
-   <!-- Chosen JS -->
-   <!-- <script src="{{ asset('../chosen/js/jquery-3.2.1.min.js') }}" defer></script> -->
-   <!-- <script src="{{ asset('../chosen/js/chosen.jquery.js') }}" defer></script>
-   <script src="{{ asset('../chosen/js/prism.js') }}" defer></script>
-   <script src="{{ asset('../chosen/js/init.js') }}" defer></script> -->
-
-   <script type="text/javascript">
-   function mostrarMensaje(messageTitle, messageBody) {
-      $("#messageTitleModal").html(messageTitle);
-      $("#messageBodyModal").html(messageBody);
-      $("#messageModal").modal("show");
-   };
-   </script>
 </body>
 </html>
