@@ -5,12 +5,13 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <title>Intergenerica</title>
    <!--Styles-->
-   <link href="{{ asset('../css/welcomeStyle.css') }}" rel="stylesheet">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   <link href="{{ asset('css/general.css') }}" rel="stylesheet">
+   <link href="{{ asset('css/welcomeStyle.css') }}" rel="stylesheet">
 
    <!--Scripts-->
-   <script src="{{ asset('../js/welcomeScript.js') }}"></script>
+   <script src="{{ asset('js/welcomeScript.js') }}"></script>
    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 </head>
@@ -18,15 +19,15 @@
 <body>
 <div class="mid-class body">
       <!--Se implementa el Login-->
-      <div class="container" id="login-form">
+      <div class="container m-azul-o" id="login-form">
          <form method="POST" action="{{ route('login') }}" class="form-group center">
             @csrf
             <h3>Iniciar sesión</h3>
             <div class="form-group row">
-               <div class="col-md-8">
+               <div class="col-md-10">
                   <div class="input-group">
                      <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        <span class="input-group-text"> <i class="fa fa-user m-azul-o"></i> </span>
                      </div>
                      <input id="email" type="email"
                         class="form-control form-control-lg control-lg @error('email') is-invalid @enderror"
@@ -41,10 +42,10 @@
             </div>
 
             <div class="form-group row">
-               <div class="col-md-8">
+               <div class="col-md-10">
                   <div class="input-group">
                      <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        <span class="input-group-text"> <i class="fa fa-lock m-azul-o"></i> </span>
                      </div>
                      <input id="password" type="password"
                         class="form-control form-control-lg @error('password') is-invalid @enderror" name="password"
@@ -58,9 +59,9 @@
                </div>
             </div>
 
-            <div class="form-group row">
-               <div class="col-md-8">
-                  <div class="custom-control custom-checkbox mr-sm-2">
+            <div class="row">
+               <div class="col-md-10">
+                  <div class="form-group form-check">
                      <input class="form-check-input largeCheck" type="checkbox" name="remember" id="remember"
                         value="{{ old('remember') ? 'checked' : '' }}">
                      <label class="form-check-label" for="remember">
@@ -80,9 +81,9 @@
                </div>
             </div>
 
-            <div class="form-group row mb-0">
-               <div class="col-md-8 ">
-                  <button type="submit" class="btn btn-primary btn-lg">
+            <div class="form-group row">
+               <div class="col-md-10 text-center">
+                  <button type="submit" class="btn btn-azul-o btn-lg">
                      {{ __('Iniciar sesión') }}
                   </button>
                   <a class="nav-link" onclick="goRegister()"
@@ -95,15 +96,15 @@
       <!--/Se implementa el Login-->
 
       <!--Se implementa el registro de usuarios / empresas-->
-      <div class="container" id="register-form" style="display: none;">
+      <div class="container m-azul-o" id="register-form" style="display: none;">
          <form method="POST" action="{{ route('register') }}" class="form-group center">
             @csrf
             <h3>Registrate como cliente</h3>
             <div class="form-group row">
-               <div class="col-md-8">
+               <div class="col-md-10">
                   <div class="input-group">
                      <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        <span class="input-group-text"> <i class="fa fa-user m-azul-o"></i> </span>
                      </div>
                      <input id="sUsrName" type="text"
                         class="form-control  form-control-lg @error('sUsrName') is-invalid @enderror" name="sUsrName"
@@ -119,10 +120,10 @@
             </div>
 
             <div class="form-group row">
-               <div class="col-md-8">
+               <div class="col-md-10">
                   <div class="input-group">
                      <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-at"></i> </span>
+                        <span class="input-group-text"> <i class="fa fa-at m-azul-o"></i> </span>
                      </div>
                      <input id="email" type="email"
                         class="form-control  form-control-lg @error('email') is-invalid @enderror" name="email"
@@ -138,10 +139,10 @@
             </div>
 
             <div class="form-group row">
-               <div class="col-md-8">
+               <div class="col-md-10">
                   <div class="input-group">
                      <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-key"></i> </span>
+                        <span class="input-group-text"> <i class="fa fa-key m-azul-o"></i> </span>
                      </div>
                      <input id="password" type="password"
                         class="form-control  form-control-lg @error('password') is-invalid @enderror" name="password"
@@ -157,10 +158,10 @@
             </div>
 
             <div class="form-group row">
-               <div class="col-md-8">
+               <div class="col-md-10">
                   <div class="input-group">
                      <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-key"></i> </span>
+                        <span class="input-group-text"> <i class="fa fa-key m-azul-o"></i> </span>
                      </div>
                      <input id="password-confirm" type="password" class="form-control  form-control-lg"
                         name="password_confirmation" required autocomplete="new-password"
@@ -169,24 +170,22 @@
                </div>
             </div>
 
-            <div class="form-group row mb-0">
-               <div class="col-md-8 ">
-                  <button type="submit" class="btn btn-primary btn-lg">
+            <div class="form-group row">
+               <div class="col-md-10 text-center">
+                  <button type="submit" class="btn btn-azul-o btn-lg">
                      {{ __('Registrate') }}
                   </button>
                   <a class="nav-link" onclick="goLogin()" href="#">{{ __('¿Ya tienes cuenta?, inicia sesión aquí')}}</a>
                   <!-- <a class="nav-link" href="{{ route('register') }}">{{ __('¿Aún no tienes cuenta?, regístrate aquí')}}</a> -->
                </div>
             </div>
-            <br>
-            <br>
             <!-- <small>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</small> -->
          </form>
          <!--/Se implementa el registro de usuarios / empresas-->
       </div>
 
       <!--Se implementa el ResetPassword-->
-      <div class="container" id="resetPwdEmail-form" style="display: none;">
+      <div class="container m-azul-o" id="resetPwdEmail-form" style="display: none;">
          @if (session('status'))
          <div class="alert alert-success" role="alert">
             {{ session('status') }}
@@ -197,10 +196,10 @@
             @csrf
             <h3>Resetear mi contraseña</h3>
             <div class="form-group row">
-               <div class="col-md-8">
+               <div class="col-md-10">
                   <div class="input-group">
                      <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-at"></i> </span>
+                        <span class="input-group-text"> <i class="fa fa-at m-azul-o"></i> </span>
                      </div>
                      <input id="email" type="email"
                         class="form-control form-control-lg @error('email') is-invalid @enderror" name="email"
@@ -216,12 +215,12 @@
                </div>
             </div>
 
-            <div class="form-group row mb-0">
-               <div class="col-md-8 ">
-                  <button type="submit" class="btn btn-primary btn-lg">
+            <div class="form-group row">
+               <div class="col-md-10 text-center">
+                  <button type="submit" class="btn btn-azul-o btn-lg">
                      {{ __('Enviar') }}
                   </button>
-                  <a class="btn btn-primary btn-lg" href="{{ url('/') }}">{{ __('Cancelar')}}</a>
+                  <a class="btn btn-azul-o btn-lg" href="{{ url('/') }}">{{ __('Cancelar')}}</a>
                </div>
             </div>
          </form>
@@ -232,7 +231,7 @@
 <!-- Footer -->
 <footer class="page-footer font-small blue">
    <!-- Copyright -->
-   <div class="footer-copyright text-center py-3">© 2020 Copyright:
+   <div class="footer-copyright text-center">© 2020 Copyright:
       <label>FarmaciasIgualaGro</label>
    </div>
    <!-- Copyright -->

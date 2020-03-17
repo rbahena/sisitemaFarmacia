@@ -1,0 +1,51 @@
+@import url('fontawesome-free/css/fontawesome.css');
+@import url('fontawesome-free/css/brands.css');
+@import url('fontawesome-free/css/solid.css');
+
+.m-blanco {
+    color: #f5f5f5;
+}
+.m-verde-c {
+    color: #f2f0ce;
+}
+.m-verde-b {
+    color: #c0c40e;
+}
+.m-verde-o {
+    color: #bfb52c;
+}
+.m-azul-c {
+    color: #0099f6;
+}
+.m-azul-o {
+    color: #095486;
+}
+
+.bg-blanco {
+    background-color: #f5f5f5;
+}
+.bg-verde-c {
+    background-color: #f2f0ce;
+}
+.bg-verde-b {
+    background-color: #c0c40e;
+}
+.bg-verde-o {
+    background-color: #bfb52c;
+}
+.bg-azul-c {
+    background-color: #0099f6;
+}
+.bg-azul-o {
+    background-color: #095486;
+}
+
+
+.btn-azul-o {
+    color: #f5f5f5;
+    background-color: #095486;
+    border-color: #095486;
+}
+.btn-azul-o:hover {
+    color: #f5f5f5;
+}
