@@ -15,12 +15,14 @@
    <link href="{{ asset('../css/sb-admin-2.min.css') }}" rel="stylesheet">
    <link href="{{ asset('../css/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
    <link href="{{ asset('../css/layoutStyle.css') }}" rel="stylesheet">
+   <link href="{{ asset('../css/bootstrap-chosen.css') }}" rel="stylesheet">
 
    <!-- Jquery para poder usar ajax-->
    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
    <script src="https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"></script>
    <script src="{{ asset('../js/layoutScript.js') }}"></script>
+   <script src="{{ asset('../js/chosen.jquery.js') }}"></script>
 
 </head>
 
@@ -47,7 +49,7 @@
          <li class="nav-item active">
             <a class="nav-link" href="{{ url('/home') }}">
                <i class="fas fa-home"></i>
-               <span>Bienvenido</span></a>
+               <span>Inicio</span></a>
          </li>
 
          <!-- Divider -->
@@ -55,7 +57,7 @@
 
          <!-- Heading -->
          <div class="sidebar-heading">
-
+            Funciones
          </div>
 
          <!-- Nav Item - Pages Collapse Menu -->
@@ -65,23 +67,21 @@
                <i class="fas fa-dollar-sign"></i>
                <span>Ventas</span>
             </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <!-- <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
-                  <!-- <h6 class="collapse-header">Custom Components:</h6> -->
                   <a class="collapse-item" href="buttons.html">Realizar una venta</a>
                   <a class="collapse-item" href="cards.html">Historial de ventas</a>
                </div>
-            </div>
+            </div> -->
          </li>
 
          <!-- Nav Item - Utilities Collapse Menu -->
          <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-               aria-expanded="true" aria-controls="collapseUtilities">
+            <a class="nav-link collapsed" href="{{ url('/detalleArticulo') }}" onclick='mostrarLoading()'>
                <i class="fas fa-file-alt"></i>
-               <span>Reportes</span>
+               <span>Alta y baja de Productos</span>
             </a>
-            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+            <!-- <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">Custom Utilities:</h6>
@@ -90,7 +90,7 @@
                   <a class="collapse-item" href="utilities-animation.html">Animations</a>
                   <a class="collapse-item" href="utilities-other.html">Other</a>
                </div>
-            </div>
+            </div> -->
          </li>
 
          <!-- Divider -->
@@ -98,17 +98,21 @@
 
          <!-- Heading -->
          <div class="sidebar-heading">
-            Catalogo
+            Catalogos
          </div>
-
+         <!-- Nav Item - Tables -->
+         <li class="nav-item">
+            <a class="nav-link" href="{{ url('/verInventario')}}" onclick='mostrarLoading()'>
+               <i class="fas fa-fw fa-table"></i>
+               <span>Inventario</span></a>
+         </li>
          <!-- Nav Item - Pages Collapse Menu -->
          <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-               aria-expanded="true" aria-controls="collapsePages">
+            <a class="nav-link" href="{{ url('/ajaxDepartamento') }}" onclick='mostrarLoading()'>
                <i class="fas fa-fw fa-folder"></i>
-               <span>En existencia</span>
+               <span>Departamentos</span>
             </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <!-- <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">Login Screens:</h6>
                   <a class="collapse-item" href="login.html">Login</a>
@@ -119,22 +123,23 @@
                   <a class="collapse-item" href="404.html">404 Page</a>
                   <a class="collapse-item" href="blank.html">Blank Page</a>
                </div>
-            </div>
+            </div> -->
          </li>
 
          <!-- Nav Item - Charts -->
          <li class="nav-item">
-            <a class="nav-link" href="charts.html">
+            <a class="nav-link" href="{{ url('/ajaxlaboratorio') }}" onclick='mostrarLoading()'>
                <i class="fas fa-fw fa-chart-area"></i>
-               <span>No disponibles</span></a>
+               <span>Laboratorios</span></a>
          </li>
 
-         <!-- Nav Item - Tables -->
          <li class="nav-item">
-            <a class="nav-link" href="tables.html">
-               <i class="fas fa-fw fa-table"></i>
-               <span>Caducados</span></a>
+            <a class="nav-link" href="{{ url('/ajaxLista') }}" onclick='mostrarLoading()'>
+               <i class="fas fa-fw fa-chart-area"></i>
+               <span>Tipo listas</span></a>
          </li>
+
+
 
          <!-- Divider -->
          <hr class="sidebar-divider d-none d-md-block">
@@ -442,4 +447,5 @@
    <script src="{{ asset('../vendor/datatables/jquery.dataTables.min.js') }}" defer></script>
    <script src="{{ asset('../vendor/datatables/dataTables.bootstrap4.min.js') }}" defer></script>
 </body>
+
 </html>

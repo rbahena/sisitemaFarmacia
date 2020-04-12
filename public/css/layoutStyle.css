@@ -98,7 +98,8 @@ label.lbFrame {
     text-align: left;
 }
 
-select {
+
+/* select {
     display: inline-block;
     font-size: 1rem;
     font-weight: 400;
@@ -108,8 +109,8 @@ select {
     border: 1px solid #ced4da;
     border-radius: .25rem;
     min-width: 120px;
-    max-width: 150px;
-}
+    max-width: 200px;
+} */
 
 .boton {
     display: inline-block;
@@ -169,23 +170,19 @@ select {
 
 #principal .frmPrincipal {
     display: inline-table;
-    width: 80%;
+    width: 65%;
 }
 
 #principal aside {
     display: inline-table;
+    float: right;
 }
 
 #principal .frameImage {
     display: inline-block;
-    width: 180px;
+    width: 210px;
     height: 180px;
     background-color: lightgray;
-}
-
-#principal #inDescripc {
-    width: 400px;
-    margin: 0 auto;
 }
 
 #principal #inMin,
@@ -232,4 +229,16 @@ select {
     height: 100%;
     z-index: 9999;
     background: url('../images/bx_loader.gif') no-repeat center center, rgba(212, 203, 245, .4);
+}
+
+.dropDownClass {
+    text-align: center;
+    width: 100%;
+    min-width: 200px;
+    max-width: 100%;
+}
+
+a.disabled {
+    pointer-events: none;
+    cursor: default;
 }

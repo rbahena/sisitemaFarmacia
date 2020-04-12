@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Models\departamento;
 use App\Models\laboratorio;
 use App\Models\medidaSAT;
 use App\Models\articulo;
+use App\Models\imagen;
+use App\Models\codigoBarraModel;
+use App\Models\listaModel;
 use Carbon\Carbon;
 
 class articulosController extends Controller
@@ -25,107 +29,93 @@ class articulosController extends Controller
 
     public function detalleArticulo(){
         $departamentos = departamento::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
-        $laboratorios = laboratorio::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
+        $laboratorios = laboratorio::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->whereNotNull('sClave')->get();
         $medidaSAT = medidaSAT::orderBy('sNombre','ASC')->where('bEstatus', '=', 1)->get();
+        $tipoLista = listaModel::orderBy('sLista','ASC')->where('bEstatus','=', 1)->get();
         return view('articulos._agregarArticulo', array(
             'departamentos' => $departamentos,
             'laboratorios' => $laboratorios,
-            'medidaSAT' => $medidaSAT
+            'medidaSAT' => $medidaSAT,
+            'tipoLista' => $tipoLista
         ));
     }
 
     public function obtenerArticulo(){
-        
         $clave = $_GET['clave'];
         $estatus = 1;
-        $departamentos = departamento::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
-        $laboratorios = laboratorio::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
-        $medidaSAT = medidaSAT::orderBy('sNombre','ASC')->where('bEstatus', '=', 1)->get();
 
-        // $detalleArticulo = DB::select('call pcObtieneDatosArticulo(?,?)',array($clave,$estatus));
-        $detalleArticulo = DB::select('select * from vgralarticulo where sNoArticulo = :clave and bEstatus = :estatus', ['clave' => $clave, 'estatus' => $estatus]);
-
+        $catalogos = $this->getCatalogos(); //obtiene
+        $detalleArticulo = DB::select('select * from vGralArticulo where sClaveLab = :clave and bEstatus = :estatus', ['clave' => $clave, 'estatus' => $estatus]);
+        
         if($detalleArticulo == null || empty($detalleArticulo))
              return array('error' => "La clave de producto no existe en base de datos");
+        
+        if(!is_null($detalleArticulo[0]->kIdImage)){
+            $catalogos['imagen'] = $this->getImagen($detalleArticulo[0]->kIdImage);
+        }  
+        
+        if(!is_null($detalleArticulo[0])){
+            $catalogos['codigosBarra'] = $this->getCodeBar($detalleArticulo[0]->kId);
+        }
 
-       return view('articulos._detalleArticulo', array(
-            'departamentos' => $departamentos,
-            'laboratorios' => $laboratorios,
-            'medidaSAT' => $medidaSAT
-        ))->with('articulo', $detalleArticulo[0]);        
+        
+        return response()->json(['error'=>'',
+                                'success'=>'Producto encontrado correctamente.',
+                                'html' => view('articulos._detalleArticulo',
+                                array('catalogos' => $catalogos))->with('articulo', $detalleArticulo[0])->render()]);     
     }
 
     public function obtenerArticuloCtrl(){
-        
         $id = $_GET['id'];
         $control = $_GET['control'];
+        $idRegistro;
        
-        $departamentos = departamento::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
-        $laboratorios = laboratorio::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
-        $medidaSAT = medidaSAT::orderBy('sNombre','ASC')->where('bEstatus', '=', 1)->get();
+        $catalogos = $this->getCatalogos();  
+        try{
+            switch($control){
+                case 'primero':
+                    $detalleArticulo = DB::select('select * from vGralArticulo order by kId desc limit 1');
+                    if(!is_null($detalleArticulo[0]->kIdImage) || $detalleArticulo[0]->kIdImage != '')
+                    $catalogos['imagen'] = $this->getImagen($detalleArticulo[0]->kIdImage);
+                    
+                    $catalogos['codigosBarra'] = $this->getCodeBar($detalleArticulo[0]->kId);
+                break;
+                case 'siguiente':
+                    $idRegistro = $id + 1;
+                    $detalleArticulo = DB::select('select * from vGralArticulo where kId = :id', ['id' =>$idRegistro]);
+                    if(!is_null($detalleArticulo[0]->kIdImage) || $detalleArticulo[0]->kIdImage != '')
+                    $catalogos['imagen'] = $this->getImagen($detalleArticulo[0]->kIdImage);
 
-        if($control == 'primero' && $id <= 0)
-        {
-        $detalleArticulo = DB::select('select * from vgralarticulo order by kId desc limit 1');
-        }
-        if($control == 'primero' && $id > 0){
-            $detalleArticulo = DB::select('select * from vgralarticulo order by kId desc limit 1');
-        }
-        else if($control == 'ultimo' && $id <= 0 ){
-        $detalleArticulo = DB::select('select * from vgralarticulo order by kId asc limit 1');
-        } else if($control == 'ultimo' && $id > 0 ){
-            $detalleArticulo = DB::select('select * from vgralarticulo order by kId asc limit 1');
-        }
-
-        else if($control == 'anterior' && $id > 0){
-            $idNew = $id - 1;
-            if($idNew == 0)
-            {
-                $detalleArticulo = DB::select('select * from vgralarticulo order by kId asc limit 1');
+                    $catalogos['codigosBarra'] = $this->getCodeBar($detalleArticulo[0]->kId);
+                break;
+                case 'anterior':
+                    $idRegistro = $id - 1;
+                    $detalleArticulo = DB::select('select * from vGralArticulo where kId = :id', ['id' =>$idRegistro]);
+                    if(!is_null($detalleArticulo[0]->kIdImage) || $detalleArticulo[0]->kIdImage != '')
+                    $catalogos['imagen'] = $this->getImagen($detalleArticulo[0]->kIdImage);
+                    
+                    $catalogos['codigosBarra'] = $this->getCodeBar($detalleArticulo[0]->kId);
+                break;
+                case 'ultimo':
+                    $detalleArticulo = DB::select('select * from vGralArticulo order by kId asc limit 1'); 
+                    if(!is_null($detalleArticulo[0]->kIdImage) || $detalleArticulo[0]->kIdImage != '')
+                    $catalogos['imagen'] = $this->getImagen($detalleArticulo[0]->kIdImage);
+                    
+                    $catalogos['codigosBarra'] = $this->getCodeBar($detalleArticulo[0]->kId);
+                break;
             }
-             $detalleArticulo = DB::select('select * from vgralarticulo where kId = :id', ['id' =>$idNew]);
         }
-        else if($control == 'anterior' && $id <= 0){
-            $detalleArticulo = DB::select('select * from vgralarticulo order by kId desc limit 1');
+        catch(Throwable $e){
+            return response()->json(['error'=>'No existe registro con el id indicado','success'=>'','html' => '']); 
         }
-        else if($control == 'siguiente' && $id > 0){
-            $idNew = $id + 1;
-            $detalleArticulo = DB::select('select * from vgralarticulo where kId = :id', ['id' => $idNew]);
-        }
-        else if($control == 'siguiente' && $id <= 0){
-            $detalleArticulo = DB::select('select * from vgralarticulo order by kId asc limit 1');
-        }
-        else if($detalleArticulo == null){
-             return array('error' => "La clave de producto no existe en base de datos");
-        }
-
-       return view('articulos._detalleArticulo', array(
-            'departamentos' => $departamentos,
-            'laboratorios' => $laboratorios,
-            'medidaSAT' => $medidaSAT
-        ))->with('articulo', $detalleArticulo[0]);        
+        return response()->json(['error'=>'','success'=>'success','html' =>
+        view('articulos._detalleArticulo', array(
+             'catalogos' => $catalogos
+        ))->with('articulo', $detalleArticulo[0])->render()]); 
     }
 
     public function index(Request $request)
     {
-   
-        // if ($request->ajax()) {
-        //     $data = Product::latest()->get();
-        //     return Datatables::of($data)
-        //             ->addIndexColumn()
-        //             ->addColumn('action', function($row){
-   
-        //                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct">Edit</a>';
-   
-        //                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct">Delete</a>';
-    
-        //                     return $btn;
-        //             })
-        //             ->rawColumns(['action'])
-        //             ->make(true);
-        // }
-      
-        // return view('productAjax',compact('products'));
     }
      
     /**
@@ -136,25 +126,24 @@ class articulosController extends Controller
      */
     public function store(Request $request)
     {
+        
         try {
-        if (articulo::where('sNoArticulo', '=', $request->inClave)->exists() && !empty($request->inkIdArticulo))
+        if (!empty($request->inputIdArticulo))
         {
             $response = $this->edit($request);
             return $response;
         }
         else{
-        if (articulo::where('sNoArticulo', '=', $request->inClave)->exists() && empty($request->inkIdArticulo))
-            return response()->json(['error'=>'La clave ya corresponde a otro articulo.','success'=>'']);
+        if (articulo::where('sArticulo', '=', $request->inputNombreFarmaco)->exists() && $request->inputIdArticulo->count() <= 0)
+            return response()->json(['error'=>'Ya existe un articulo con el mismo nombre.','success'=>'']);
 
-            $departamentos = departamento::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
-            $laboratorios = laboratorio::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
-            $medidaSAT = medidaSAT::orderBy('sNombre','ASC')->where('bEstatus', '=', 1)->get();  
+            $catalogos = $this->getCatalogos();
+
             $parameters = $this->getParameters($request);
-           $response =  DB::select('call piCreaNvoArticulo(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',array(
+           $response =  DB::select('call piCreaNvoArticulo(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',array(
            $parameters[0]['pi_sArticulo'],
            $parameters[0]['pi_sDescripcion'],
            $parameters[0]['pi_sNoArticulo'],
-           $parameters[0]['pi_iCodigoBarra'],
            $parameters[0]['pi_fkIdDpto'],
            $parameters[0]['pi_fkIdLab'],
            $parameters[0]['pi_sSustancia'],
@@ -162,7 +151,7 @@ class articulosController extends Controller
            $parameters[0]['pi_bInventario'],
            $parameters[0]['pi_bCompra'],
            $parameters[0]['pi_bVenta'],
-           $parameters[0]['pi_articuloActivo'],
+           $parameters[0]['pi_bEstatus'],
            $parameters[0]['pi_fFechaCadu'],
            $parameters[0]['pi_SATmedida'],
            $parameters[0]['pi_codigoProdSAT'],
@@ -170,15 +159,32 @@ class articulosController extends Controller
            $parameters[0]['pi_stockMax'],
            $parameters[0]['bImpIVA'],
            $parameters[0]['dPrecioCompra'],
-           $parameters[0]['dPrecioPublico']));
+           $parameters[0]['pi_dPrecioVenta'],
+           $parameters[0]['pi_dPrecioLunes'],
+           $parameters[0]['pi_dPrecioMayorista'],
+           $parameters[0]['pi_dPrecioNormal'],
+           $parameters[0]['pi_fkIdLista'],
+           $parameters[0]['pi_sColectivo']
+        ));
 
-          $articulo = DB::select('select * from vgralarticulo where kId = :id', ['id' => (int)$response[0]->kIdArticulo]);
+           if(!empty($request->inputImgBase64)){
+               $imagen = new imagen();
+               $imagen->bImage =  $request->inputImgBase64;
+               $imagen->fkIdArticulo =  (int)$response[0]->kIdArticulo;
+               $imagen->save();
+            }
+
+            $articulo = DB::select('select * from vGralArticulo where kId = :id', ['id' => (int)$response[0]->kIdArticulo]);
+            $IdArticulo = (int)$articulo[0]->kId;
+            $numeroCodigos = $request->inputNumeroCodigos;
+            $codigos = $request->inputCodigosBarras;
+            
+            $catalogos['codigosBarra'] = DB::select('call piInsertaCodigo(?,?,?)',array($IdArticulo,$codigos,$numeroCodigos));
+            $catalogos['imagen'] = $this->getImagen($articulo[0]->kIdImage);
 
             return response()->json(['error'=>'','success'=>'Producto agregado exitosamente.','html' =>
           view('articulos._detalleArticulo',array(
-            'departamentos' => $departamentos,
-            'laboratorios' => $laboratorios,
-            'medidaSAT' => $medidaSAT
+            'catalogos' => $catalogos
         ))->with('articulo', $articulo[0])->render()
           ]);
         }
@@ -195,16 +201,14 @@ class articulosController extends Controller
     public function edit(Request $request)
     {
         $parameters = $this->getParameters($request);
-        $departamentos = departamento::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
-        $laboratorios = laboratorio::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
-        $medidaSAT = medidaSAT::orderBy('sNombre','ASC')->where('bEstatus', '=', 1)->get();  
+        $catalogos = $this->getCatalogos();
         
-            DB::select('call paNvoArticulo(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',array(
+            DB::select('call paNvoArticulo(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',array(
             $parameters[0]['pi_kId'],
             $parameters[0]['pi_sArticulo'],
             $parameters[0]['pi_sDescripcion'],
             $parameters[0]['pi_sNoArticulo'],
-            $parameters[0]['pi_iCodigoBarra'],
+            '',
             $parameters[0]['pi_fkIdDpto'],
             $parameters[0]['pi_fkIdLab'],
             $parameters[0]['pi_sSustancia'],
@@ -212,7 +216,7 @@ class articulosController extends Controller
             $parameters[0]['pi_bInventario'],
             $parameters[0]['pi_bCompra'],
             $parameters[0]['pi_bVenta'],
-            $parameters[0]['pi_articuloActivo'],
+            $parameters[0]['pi_bEstatus'],
             $parameters[0]['pi_fFechaCadu'],
             $parameters[0]['pi_SATmedida'],
             $parameters[0]['pi_codigoProdSAT'],
@@ -220,15 +224,40 @@ class articulosController extends Controller
             $parameters[0]['pi_stockMax'],
             $parameters[0]['bImpIVA'],
             $parameters[0]['dPrecioCompra'],
-            $parameters[0]['dPrecioPublico']));
-           $articulo = DB::select('select * from vgralarticulo where kId = :id', ['id' => (int)$request->inkIdArticulo]);
-             return response()->json(['error'=>'','success'=>'Se actualizo correctamente.','html' =>
-           view('articulos._detalleArticulo',array(
-             'departamentos' => $departamentos,
-             'laboratorios' => $laboratorios,
-             'medidaSAT' => $medidaSAT
-         ))->with('articulo', $articulo[0])->render()
-           ]);
+            $parameters[0]['pi_dPrecioVenta'],
+            $parameters[0]['pi_dPrecioLunes'],
+            $parameters[0]['pi_dPrecioMayorista'],
+            $parameters[0]['pi_dPrecioNormal'],
+            $parameters[0]['pi_fkIdLista'],
+            $parameters[0]['pi_sColectivo'])
+            );
+           $articulo = DB::select('select * from vGralArticulo where kId = :id', ['id' => (int)$request->inputIdArticulo]);
+         
+           if(!empty($request->inputImgBase64)){            
+            if(imagen::where('fkIdArticulo', '=', (int)$articulo[0]->kId)->where('bEstatus','=', 1)->exists()){
+                imagen::where('fkIdArticulo', '=', (int)$articulo[0]->kId)->update(array('bImage' => $request->inputImgBase64));
+            }
+            else{
+                $insertImagen = new imagen();
+                $insertImagen->bImage =  $request->inputImgBase64;
+                $insertImagen->fkIdArticulo = (int)$articulo[0]->kId;
+                $insertImagen->save(); 
+            }
+         }
+           $articulo = DB::select('select * from vGralArticulo where kId = :id', ['id' => (int)$request->inputIdArticulo]);
+           $IdArticulo = (int)$articulo[0]->kId;
+           $numeroCodigos = $request->inputNumeroCodigos;
+           $codigos = $request->inputCodigosBarras;
+
+           $catalogos['codigosBarra'] = DB::select('call piInsertaCodigo(?,?,?)',array($IdArticulo,$codigos,$numeroCodigos));
+           $catalogos['imagen'] = $this->getImagen($articulo[0]->kIdImage);
+
+
+           return response()->json(['error'=>'','success'=>'Actualizado correctamente','html' =>
+          view('articulos._detalleArticulo',array(
+            'catalogos' => $catalogos
+        ))->with('articulo', $articulo[0])->render()
+          ]);
 
     }
   
@@ -240,36 +269,71 @@ class articulosController extends Controller
      */
     public function destroy($id)
     {
-        Product::find($id)->delete();
-     
-        return response()->json(['success'=>'Product deleted successfully.']);
     }
      
     public function getParameters(Request $request){      
         $parametersData = array([
-            'pi_kId' => !empty($request->inkIdArticulo) ? $request->inkIdArticulo : '',
-            'pi_sArticulo' =>  !empty($request->inDescripc) ?  $request->inDescripc :'',
-            'pi_sDescripcion' => !empty($request->inDescripc) ? $request->inDescripc:'',
-            'pi_sNoArticulo' => !empty($request->inClave) ? $request->inClave:'',
-            'pi_iCodigoBarra' => !empty($request->inBarCade) ? $request->inBarCade:'',
-            'pi_fkIdDpto' => !empty($request->lstDepart) ? $request->lstDepart: 0,
-            'pi_fkIdLab' => !empty($request->inLab) ? $request->inLab : 0,
-            'pi_sSustancia' => !empty($request->inSustan) ? $request->inSustan:'',
-            'pi_sPresentacion' => !empty($request->inPresent) ? $request->inPresent:'',
-            'pi_bInventario' => !empty($request->inArticuloInventario) ? (int)$request->inArticuloInventario:'',
-            'pi_bCompra' =>  !empty($request->inArticuloCompra) ? (int)$request->inArticuloCompra:'',
-            'pi_bVenta' =>  !empty($request->inArticuloVenta) ? (int)$request->inArticuloVenta:'', 
-            'pi_articuloActivo' => !empty($request->inArticuloActivo) ? (int)$request->inArticuloActivo:'',
-            'pi_fFechaCadu' => !empty($request->inFecCad) ? $request->inFecCad:Carbon::now(),
-            'pi_SATmedida' => !empty($request->inSATCode) ? $request->inSATCode:'',
-            'pi_codigoProdSAT' => !empty($request->inSATProd) ? $request->inSATProd:'',
-            'pi_stockMin' => !empty($request->inStockMin) ? (int)$request->inStockMin:0,
-            'pi_stockMax' => !empty($request->inStockMax) ? (int)$request->inStockMax:0,
-            'bImpIVA' => !empty($request->inArticuloIVA) ? (int)$request->inArticuloIVA:0,
-            'dPrecioCompra' => !empty($request->inPreComp)? (double)$request->inPreComp :0.00,
-            'dPrecioPublico' => !empty($request->inPrePub) ? (double)$request->inPrePub:0.00,
+            'pi_kId' => !empty($request->inputIdArticulo) ? $request->inputIdArticulo : '',
+            'pi_sArticulo' =>  !empty($request->inputNombreFarmaco) ?  $request->inputNombreFarmaco :'',
+            'pi_sDescripcion' => !empty($request->inputDescripcion) ? $request->inputDescripcion:'',
+            'pi_sNoArticulo' => '',
+            'pi_fkIdDpto' => !empty($request->selectDepartamento) ? $request->selectDepartamento: 0,
+            'pi_fkIdLab' => !empty($request->selectLaboratorio) ? $request->selectLaboratorio : 1,
+            'pi_sSustancia' => !empty($request->inputSustancia) ? $request->inputSustancia:'',
+            'pi_sPresentacion' => !empty($request->inputPresentacion) ? $request->inputPresentacion:'',
+            'pi_bInventario' => !empty($request->checkEsInventario) ? (int)$request->checkEsInventario:'',
+            'pi_bCompra' =>  !empty($request->checkEsCompra) ? (int)$request->checkEsCompra:'',
+            'pi_bVenta' =>  !empty($request->checkEsVenta) ? (int)$request->checkEsVenta:'', 
+            'pi_bEstatus' => !empty($request->checkEsActivo) ? (int)$request->checkEsActivo:'',
+            'pi_fFechaCadu' => Carbon::now(),
+            'pi_SATmedida' => !empty($request->selectUnidadesSat) ? $request->selectUnidadesSat:1,
+            'pi_codigoProdSAT' => !empty($request->inputCodigoSat) ? $request->inputCodigoSat:'',
+            'pi_stockMin' => !empty($request->inputStockMinimo) ? $request->inputStockMinimo:0,
+            'pi_stockMax' => !empty($request->inputStockMaximo) ? $request->inputStockMaximo:0,
+            'bImpIVA' => !empty($request->checkEsIVA) ? (int)$request->checkEsIVA:'',
+            'dPrecioCompra' => 0.00,
+            'pi_dPrecioVenta' => !empty($request->inputPrecioPublico) ? (double)$request->inputPrecioPublico:0.00,
+            'pi_dPrecioLunes'=> !empty($request->inputPrecioLunes) ? (double)$request->inputPrecioLunes:0.00,
+            'pi_dPrecioMayorista'=> !empty($request->inputPrecioMayoreo) ? (double)$request->inputPrecioMayoreo:0.00,
+            'pi_dPrecioNormal'=> !empty($request->inputPrecioNormal) ? (double)$request->inputPrecioNormal:0.00,
+            'pi_fkIdLista' => !empty($request->selectTipoLista) ? $request->selectTipoLista:1,
+            'pi_sColectivo' => !empty($request->inputColectivo) ? $request->inputColectivo:''
             ]);
         return $parametersData;
     }
 
+    public function getCodeBars(Request $request){
+        $categories = array();
+        foreach($request as $parametro){
+            if($parametro == "inBarCade_1"){
+                return "hpls";array_push($categories,$parametro);
+            }
+        }
+        return $categories;
+    }
+
+    public function getCatalogos(){
+        $departamentos = departamento::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
+        $laboratorios = laboratorio::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
+        $medidaSAT = medidaSAT::orderBy('sNombre','ASC')->where('bEstatus', '=', 1)->get();
+        $tipoLista = listaModel::orderBy('sLista','ASC')->where('bEstatus','=', 1)->get();
+        $imagen = '';
+        $codigos = '';
+        return array(
+            'departamentos' => $departamentos,
+            'laboratorios' => $laboratorios,
+            'medidaSAT' => $medidaSAT,
+            'tipoLista' => $tipoLista,
+            'imagen' => $imagen,
+            'codigosBarra' => $codigos          
+        );
+    }
+
+    public function getImagen($idImagen){
+        return imagen::where('kId', '=', $idImagen)->where('bEstatus','=', 1)->get();
+    }
+
+    public function getCodeBar($idArticulo){
+        return codigoBarraModel::where('fkIdArticulo', '=', $idArticulo)->where('bEstatus','=', 1)->get();
+    }
 }

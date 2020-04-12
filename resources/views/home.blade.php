@@ -22,9 +22,8 @@
 
 <!-- Content Row -->
 <div class="row">
-
    <!-- Realizar venta Card -->
-   <div class="col-xl-3 col-md-6 mb-4 cursorPointer">
+   <!-- <div class="col-xl-3 col-md-6 mb-4 cursorPointer">
       <div class="card border-left-primary shadow h-100 py-2">
          <div class="card-body">
             <div class="row no-gutters align-items-center">
@@ -36,7 +35,7 @@
             </div>
          </div>
       </div>
-   </div>
+   </div> -->
 
    <!-- Total de ver inventario -->
    <div class="col-xl-3 col-md-6 mb-4" id="divInventario">
@@ -74,7 +73,21 @@
          <div class="card-body">
             <div class="row no-gutters align-items-center">
                <div class="col mr-2 text-center">
-                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Ventas canceladas
+                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><a  href="{{ url('/ajaxDepartamento') }}">AGREGAR DEPARTAMENTOS</a>
+                  </div>
+                  <a class="fas fa-comments fa-2x text-gray-300" href="{{ url('/ajaxDepartamento') }}"></a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+         <div class="card-body">
+            <div class="row no-gutters align-items-center">
+               <div class="col mr-2 text-center">
+                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><a  href="{{ url('/ajaxlaboratorio') }}">AGREGAR LABORATORIOS</a>
                   </div>
                   <i class="fas fa-comments fa-2x text-gray-300"></i>
                </div>
@@ -82,5 +95,20 @@
          </div>
       </div>
    </div>
+
+   <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100 py-2">
+         <div class="card-body">
+            <div class="row no-gutters align-items-center">
+               <div class="col mr-2 text-center">
+                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><a  href="{{ url('/ajaxLista') }}">AGREGAR LISTA</a>
+                  </div>
+                  <i class="fas fa-comments fa-2x text-gray-300"></i>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
 </div>
 @endsection

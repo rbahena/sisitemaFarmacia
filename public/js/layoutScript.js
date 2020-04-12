@@ -1,7 +1,6 @@
 $(document).ready(function() {
     $('#loading').hide();
     mostrarSaludo();
-
 });
 
 function mostrarSaludo() {
