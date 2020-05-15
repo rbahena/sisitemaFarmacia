@@ -96,12 +96,12 @@ $(function() {
    });
 
    $('#createNewProduct').click(function() {
-      // $('#saveBtn').val("Agregar almacen");
-      // $('#empleado_id').val('');
-      // $('#accion').val("crear");
-      // $('#dataForm').trigger("reset");
-      // $('#modelHeading').html("Agregar nuevo empleado");
-      // $('#ajaxModel').modal('show');
+      $('#saveBtn').val("Agregar almacen");
+      $('#empleado_id').val('');
+      $('#accion').val("crear");
+      $('#dataForm').trigger("reset");
+      $('#modelHeading').html("Agregar nuevo empleado");
+      $('#ajaxModel').modal('show');
    });
 
    $('body').on('click', '.editProduct', function() {
