@@ -55,7 +55,7 @@
                id="codigoBarras_{{!empty($codigo->kId) ? $codigo->kId:''}}"
                name="codigoBarras_{{!empty($codigo->kId) ? $codigo->kId:''}}"
                value="{{!empty($codigo->sCodigoBarra) ? $codigo->sCodigoBarra:''}}" maxlength="50" disabled>
-               &nbsp;<i title="Eliminar este codifo de barras" class="fas fa-trash-alt" onclick='eliminarImputCodBarrras("#DivCodigoBarras_{{$loop->index}}")'></i>
+               &nbsp;<i title="Eliminar este codifo de barras" class="fas fa-trash-alt enable-disabled" onclick='eliminarImputCodBarrras("#DivCodigoBarras_{{$loop->index}}")' disabled></i>
             </div>
             </div>
             @endforeach

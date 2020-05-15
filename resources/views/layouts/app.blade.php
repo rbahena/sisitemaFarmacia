@@ -18,8 +18,8 @@
    <link href="{{ asset('../css/bootstrap-chosen.css') }}" rel="stylesheet">
 
    <!-- Jquery para poder usar ajax-->
-   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-   <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
    <script src="https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"></script>
    <script src="{{ asset('../js/layoutScript.js') }}"></script>
    <script src="{{ asset('../js/chosen.jquery.js') }}"></script>
@@ -34,13 +34,14 @@
       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
          <!-- Sidebar - Brand -->
-         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/home') }}">
-            <div class="sidebar-brand-icon rotate-n-15">
-               <i class="fas fa-first-aid"></i>
-               <!-- <img src="../images/Logo.jpg" alt=""> -->
-            </div>
-            <div class="sidebar-brand-text mx-3">interGenírica</div>
-         </a>
+         <!-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/home') }}">
+            <div class="sidebar-brand-icon ">
+            <i class="fas fa-clinic-medical"></i>
+               <i class="fas fa-first-aid"></i> -->
+            <!-- <img  src="../images/icon-farmacia.png" alt="" width="50" height="50" > -->
+            <!-- </div>
+            <div class="sidebar-brand-text mx-3">interGenerica</div>
+         </a> -->
 
          <!-- Divider -->
          <hr class="sidebar-divider my-0">
@@ -48,99 +49,64 @@
          <!-- Nav Item - Dashboard -->
          <li class="nav-item active">
             <a class="nav-link" href="{{ url('/home') }}">
-               <i class="fas fa-home"></i>
+            <i class="fas fa-clinic-medical"></i>
                <span>Inicio</span></a>
          </li>
-
-         <!-- Divider -->
          <hr class="sidebar-divider">
-
-         <!-- Heading -->
-         <div class="sidebar-heading">
-            Funciones
-         </div>
-
-         <!-- Nav Item - Pages Collapse Menu -->
+<br>
+<br>
          <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-               aria-expanded="true" aria-controls="collapseTwo">
-               <i class="fas fa-dollar-sign"></i>
-               <span>Ventas</span>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#lstInventario"
+               aria-expanded="true" aria-controls="lstInventario">
+               <i class="fas fa-file-alt fa-2x"></i>
+               <span>Inventario</span>
             </a>
-            <!-- <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="lstInventario" class="collapse" aria-labelledby="lstInventario" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
-                  <a class="collapse-item" href="buttons.html">Realizar una venta</a>
-                  <a class="collapse-item" href="cards.html">Historial de ventas</a>
+               <a class="collapse-item efectoHover"  href="{{ url('/moduloInventario')}}" onclick='mostrarLoading()'>Ver todo</a>
+                  <a class="collapse-item efectoHover"  href="{{ url('/verInventario')}}" onclick='mostrarLoading()'>Nuestro inventario</a>
+                  <a class="collapse-item" href="{{ url('/detalleArticulo') }}" onclick='mostrarLoading()'>Admin de productos</a>
+                  <a class="collapse-item" href="{{ url('/ajaxDepartamento') }}" onclick='mostrarLoading()'>Departamentos</a>
+                  <a class="collapse-item" href="{{ url('/ajaxlaboratorio') }}" onclick='mostrarLoading()'>Laboratorios</a>
+                  <a class="collapse-item" href="{{ url('/ajaxLista') }}" onclick='mostrarLoading()'>Tipos de lista</a>
+                  <a class="collapse-item" href="{{ url('/ajaxAlmacen') }}" onclick='mostrarLoading()'>Almacenes</a>
                </div>
-            </div> -->
+            </div>
          </li>
 
-         <!-- Nav Item - Utilities Collapse Menu -->
-         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('/detalleArticulo') }}" onclick='mostrarLoading()'>
-               <i class="fas fa-file-alt"></i>
-               <span>Alta y baja de Productos</span>
-            </a>
-            <!-- <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-               data-parent="#accordionSidebar">
-               <div class="bg-white py-2 collapse-inner rounded">
-                  <h6 class="collapse-header">Custom Utilities:</h6>
-                  <a class="collapse-item" href="utilities-color.html">Colors</a>
-                  <a class="collapse-item" href="utilities-border.html">Borders</a>
-                  <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                  <a class="collapse-item" href="utilities-other.html">Other</a>
-               </div>
-            </div> -->
-         </li>
-
-         <!-- Divider -->
          <hr class="sidebar-divider">
-
-         <!-- Heading -->
-         <div class="sidebar-heading">
-            Catalogos
-         </div>
-         <!-- Nav Item - Tables -->
          <li class="nav-item">
-            <a class="nav-link" href="{{ url('/verInventario')}}" onclick='mostrarLoading()'>
-               <i class="fas fa-fw fa-table"></i>
-               <span>Inventario</span></a>
-         </li>
-         <!-- Nav Item - Pages Collapse Menu -->
-         <li class="nav-item">
-            <a class="nav-link" href="{{ url('/ajaxDepartamento') }}" onclick='mostrarLoading()'>
-               <i class="fas fa-fw fa-folder"></i>
-               <span>Departamentos</span>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#lstAdmin"
+               aria-expanded="true" aria-controls="lstAdmin">
+               <i class="fas fa-tools"></i>
+               <span>Administración</span>
             </a>
-            <!-- <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div id="lstAdmin" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
-                  <h6 class="collapse-header">Login Screens:</h6>
-                  <a class="collapse-item" href="login.html">Login</a>
-                  <a class="collapse-item" href="register.html">Register</a>
-                  <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                  <div class="collapse-divider"></div>
-                  <h6 class="collapse-header">Other Pages:</h6>
-                  <a class="collapse-item" href="404.html">404 Page</a>
-                  <a class="collapse-item" href="blank.html">Blank Page</a>
+                  <a class="collapse-item" href="{{ url('/moduloAdministracion') }}" onclick='mostrarLoading()'>Ver todos</a>
+                  <a class="collapse-item" href="{{ url('/ajaxEmpleado') }}" onclick='mostrarLoading()'>Empleados</a>
+                  <a class="collapse-item" href="{{ url('/notFound') }}">Empresas</a>
+                  <a class="collapse-item" href="{{ url('/notFound') }}">Cuentas bancarias</a>
                </div>
-            </div> -->
+            </div>
          </li>
 
-         <!-- Nav Item - Charts -->
+         <hr class="sidebar-divider">
          <li class="nav-item">
-            <a class="nav-link" href="{{ url('/ajaxlaboratorio') }}" onclick='mostrarLoading()'>
-               <i class="fas fa-fw fa-chart-area"></i>
-               <span>Laboratorios</span></a>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#lstProveedores"
+               aria-expanded="true" aria-controls="lstProveedores">
+               <i class="fas fa-truck-moving"></i>
+               <span>Servicios</span>
+            </a>
+            <div id="lstProveedores" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+               <div class="bg-white py-2 collapse-inner rounded">
+                  <a class="collapse-item" href="{{ url('/moduloServicios') }}" onclick='mostrarLoading()'>Ver todos</a>
+                  <a class="collapse-item" href="{{ url('/ajaxProveedor') }}" onclick='mostrarLoading()'>Proveedores</a>
+                  <a class="collapse-item" href="{{ url('/notFound') }}" onclick='mostrarLoading()'>Clientes mayoristas</a>
+               </div>
+            </div>
          </li>
-
-         <li class="nav-item">
-            <a class="nav-link" href="{{ url('/ajaxLista') }}" onclick='mostrarLoading()'>
-               <i class="fas fa-fw fa-chart-area"></i>
-               <span>Tipo listas</span></a>
-         </li>
-
-
-
+         
          <!-- Divider -->
          <hr class="sidebar-divider d-none d-md-block">
 
@@ -399,7 +365,7 @@
          <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                <div class="copyright text-center my-auto">
-                  <span>Copyright &copy; inerGeneríca farmacia 2020 - 2020</span>
+                  <span>Copyright &copy;FARMACIAS INTERGENERICA 2020 - 2020</span>
                </div>
             </div>
          </footer>

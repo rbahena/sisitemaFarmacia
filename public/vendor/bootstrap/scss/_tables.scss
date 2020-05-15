@@ -42,7 +42,7 @@
 //
 // Add or remove borders all around the table and between all the columns.
 
-.table-bordered {
+.table-hover {
   border: $table-border-width solid $table-border-color;
 
   th,
@@ -137,7 +137,7 @@
     border-color: $table-dark-border-color;
   }
 
-  &.table-bordered {
+  &.table-hover {
     border: 0;
   }
 
@@ -176,7 +176,7 @@
         -webkit-overflow-scrolling: touch;
 
         // Prevent double border on horizontal scroll due to use of `display: block;`
-        > .table-bordered {
+        > .table-hover {
           border: 0;
         }
       }

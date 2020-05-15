@@ -232,7 +232,7 @@
 <footer class="page-footer font-small blue">
    <!-- Copyright -->
    <div class="footer-copyright text-center">© 2020 Copyright:
-      <label>FarmaciasIgualaGro</label>
+      <label>medica_intergenerica</label>
    </div>
    <!-- Copyright -->
 </footer>

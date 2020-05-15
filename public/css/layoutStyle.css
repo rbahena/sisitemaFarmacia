@@ -242,3 +242,11 @@ a.disabled {
     pointer-events: none;
     cursor: default;
 }
+
+.fas {
+    font-size: 21px!important;
+}
+
+.efectoHover:hover {
+    background-color: gray;
+}

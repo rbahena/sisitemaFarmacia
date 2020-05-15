@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Agrega, edita o elimina laboratorios</h1>
-<a class="btn btn-success" href="javascript:void(0)" id="createNewProduct">Agregar nuevo laboratorio</a>
+<div class="text-center">
+<h3>Agrega, edita o elimina laboratorios</h3>
+</div>
+<a class="btn btn-success" href="javascript:void(0)" id="createNewProduct">Agregar nuevo</a>
 <hr>
-<table class="table table-bordered data-table" id="dataTable">
+<table class="table table-hover data-table" id="dataTable">
    <thead>
       <tr>
          <th>No</th>
@@ -30,19 +32,19 @@
                <div class="form-group">
                   <label for="name" class="control-label">Nombre laboratorio</label>
                   <div class="col-sm-12">
-                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value=""
+                     <input type="text" class="form-control" id="name" name="name" placeholder="Ingresa el nombre" value=""
                         maxlength="50" required="">
                   </div>
                </div>
                <div class="form-group">
                   <label for="name" class="control-label">Clave</label>
                   <div class="col-sm-12">
-                     <input type="text" class="form-control" id="clave" name="clave" maxlength="3" placeholder="Ej. LAB"
+                     <input type="text" class="form-control" id="clave" name="clave" maxlength="3" placeholder="Ej. LAB001"
                         value="" maxlength="50" required="">
                   </div>
                </div>
                <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Guardar cambios
+                  <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Guardar
                   </button>
                </div>
             </form>
@@ -111,18 +113,18 @@ $(function() {
    });
 
    $('#createNewProduct').click(function() {
-      $('#saveBtn').val("Agregar departamento");
+      $('#saveBtn').val("Agregar laboratorio");
       $('#product_id').val('');
       $('#accion').val("crear");
       $('#productForm').trigger("reset");
-      $('#modelHeading').html("Crea nuevo producto");
+      $('#modelHeading').html("Agregar nuevo laboratorio");
       $('#ajaxModel').modal('show');
    });
 
    $('body').on('click', '.editProduct', function() {
       var product_id = $(this).data('id');
       $.get("{{ route('ajaxlaboratorio.index') }}" + '/' + product_id + '/edit', function(data) {
-         $('#modelHeading').html("Editar departamento");
+         $('#modelHeading').html("Editar laboratorio");
          $('#saveBtn').val("Guardar cambios");
          $('#ajaxModel').modal('show');
          $('#product_id').val(data.kId);

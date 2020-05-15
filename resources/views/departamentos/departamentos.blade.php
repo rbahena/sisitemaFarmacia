@@ -1,15 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Agrega, edita o elimina departamentos</h1>
-<a class="btn btn-success" href="javascript:void(0)" id="createNewProduct">Agregar nuevo departamento</a>
+<div class="text-center">
+<h3>Agrega, edita o elimina departamentos</h3>
+</div>
+<a class="btn btn-success" href="javascript:void(0)" id="createNewProduct">Agregar nuevo</a>
 <hr>
-<table class="table table-bordered data-table" id="dataTable">
+<br>
+<table class="table table-hover data-table" id="dataTable">
    <thead>
       <tr>
          <th>No</th>
          <th>Name</th>
-         <th width="280px">Action</th>
+         <th width="280px">Funciones</th>
       </tr>
    </thead>
    <tbody>
@@ -34,7 +37,7 @@
                   </div>
                </div>
                <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Guardar cambios
+                  <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Guardar
                   </button>
                </div>
             </form>
@@ -103,7 +106,7 @@ $(function() {
       $('#product_id').val('');
       $('#accion').val("crear");
       $('#productForm').trigger("reset");
-      $('#modelHeading').html("Crea nuevo producto");
+      $('#modelHeading').html("Agregar nuevo departamento");
       $('#ajaxModel').modal('show');
    });
 

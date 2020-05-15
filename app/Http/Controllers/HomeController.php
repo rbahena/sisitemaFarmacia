@@ -25,4 +25,26 @@ class HomeController extends Controller
     {
         return view('home');
     }
+   
+    public function moduloInventario()
+    {
+        return view('layouts.inventario');
+    }
+
+    public function moduloAdministracion()
+    {
+        return view('layouts.administracion');
+    }
+
+    public function moduloServicios()
+    {
+        return view('layouts.servicios');
+    }
+
+    public function notFound()
+    {
+        return view('layouts.notFound');
+    }
+
+    
 }

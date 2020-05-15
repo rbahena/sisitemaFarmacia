@@ -134,7 +134,7 @@ class articulosController extends Controller
             return $response;
         }
         else{
-        if (articulo::where('sArticulo', '=', $request->inputNombreFarmaco)->exists() && $request->inputIdArticulo->count() <= 0)
+        if (articulo::where('sArticulo', '=', $request->inputNombreFarmaco)->exists() && empty($request->inputIdArticulo))
             return response()->json(['error'=>'Ya existe un articulo con el mismo nombre.','success'=>'']);
 
             $catalogos = $this->getCatalogos();
@@ -164,7 +164,7 @@ class articulosController extends Controller
            $parameters[0]['pi_dPrecioMayorista'],
            $parameters[0]['pi_dPrecioNormal'],
            $parameters[0]['pi_fkIdLista'],
-           $parameters[0]['pi_sColectivo']
+           $parameters[0]['pi_iColectivo']
         ));
 
            if(!empty($request->inputImgBase64)){
@@ -229,7 +229,7 @@ class articulosController extends Controller
             $parameters[0]['pi_dPrecioMayorista'],
             $parameters[0]['pi_dPrecioNormal'],
             $parameters[0]['pi_fkIdLista'],
-            $parameters[0]['pi_sColectivo'])
+            $parameters[0]['pi_iColectivo'])
             );
            $articulo = DB::select('select * from vGralArticulo where kId = :id', ['id' => (int)$request->inputIdArticulo]);
          
@@ -297,7 +297,7 @@ class articulosController extends Controller
             'pi_dPrecioMayorista'=> !empty($request->inputPrecioMayoreo) ? (double)$request->inputPrecioMayoreo:0.00,
             'pi_dPrecioNormal'=> !empty($request->inputPrecioNormal) ? (double)$request->inputPrecioNormal:0.00,
             'pi_fkIdLista' => !empty($request->selectTipoLista) ? $request->selectTipoLista:1,
-            'pi_sColectivo' => !empty($request->inputColectivo) ? $request->inputColectivo:''
+            'pi_iColectivo' => !empty($request->inputColectivo) ? (int)$request->inputColectivo:0
             ]);
         return $parametersData;
     }

@@ -1,17 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Agrega, edita o elimina las lista de promociones</h1>
-<a class="btn btn-success" href="javascript:void(0)" id="createNewProduct">Agregar nueva lista</a>
+<div class="text-center">
+<h3>Agrega, edita o elimina las lista de promociones</h3>
+</div>
+<a class="btn btn-success" href="javascript:void(0)" id="createNewProduct">Agregar nuevo</a>
 <hr>
-<table class="table table-bordered data-table" id="dataTable">
+<br>
+<table class="table table-hover data-table" id="dataTable">
    <thead>
       <tr>
          <th>No</th>
          <th>Nombre</th>
          <th>Descripción</th>
-         <th>Formula</th>
-         <th width="280px">Accion</th>
+         <th>Formúla</th>
+         <th width="280px">Funciones</th>
       </tr>
    </thead>
    <tbody>
@@ -31,25 +34,25 @@
                <div class="form-group">
                   <label for="name" class="control-label">Nombre de la lista</label>
                   <div class="col-sm-12">
-                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value=""
+                     <input type="text" class="form-control" id="name" name="name" placeholder="Ej. Lista A" value=""
                         maxlength="50" required="">
                   </div>
 
                   <label for="descripcion" class="control-label">Descripción</label>
                   <div class="col-sm-12">
-                     <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Ingresa ña descripcion de la lista" value=""
+                     <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Ej. Esta lista indica un descuento del 15%" value=""
                         maxlength="50" required="">
                   </div>
 
-                  <label for="formaula" class="control-label">Formula</label>
+                  <label for="formaula" class="control-label">Formúla</label>
                   <div class="col-sm-12">
-                     <input type="text" class="form-control" id="formaula" name="formaula" placeholder="ingresa la formaula" value=""
+                     <input type="text" class="form-control" id="formaula" name="formaula" placeholder="Ej. -15%" value=""
                         maxlength="50" required="">
                   </div>
 
                </div>
                <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Guardar cambios
+                  <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Guardar
                   </button>
                </div>
             </form>
@@ -133,7 +136,7 @@ $(function() {
    $('body').on('click', '.editProduct', function() {
       var product_id = $(this).data('id');
       $.get("{{ route('ajaxLista.index') }}" + '/' + product_id + '/edit', function(data) {
-         $('#modelHeading').html("Editar departamento");
+         $('#modelHeading').html("Editar Lista");
          $('#saveBtn').val("Guardar cambios");
          $('#ajaxModel').modal('show');
          $('#product_id').val(data.kId);

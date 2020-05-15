@@ -75,7 +75,6 @@ class listaController extends Controller
     {
         listaModel::where('kId', '=', $id)->update(array('bEstatus' => 0));
     //   departamento::find($id)->delete();
-     
         return response()->json(['success'=>'Product deleted successfully.']);
     }
 }
