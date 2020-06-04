@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div id="cabecera" hidden>
    <div class="container text-center">
-      <h3>Agrega, consulta y/o edita los proveedores</h3>
+      <h3>Agrega, consulta y/o edita los Empleadoes</h3>
    </div>
    <hr>
    <nav class="renglon form-inline col-md-5">
-      <label for="inputClaveBusqueda">Clave del proveedor:</label>
+      <label for="inputClaveBusqueda">Clave del Empleado:</label>
       <input type="text" name="inputClaveBusqueda" id="inputClaveBusqueda" class="form-control col-md-3"
          placeholder="Ej. 001" value="">&nbsp;
       <button type="button" class="btn btn-primary" id="btnBurcarClave"><i class="fa fa-search"></i></button>
@@ -29,24 +30,25 @@
                onclick="fnControles('primero',0)" title="Primer registro, registro más reciente que se agregó"><i
                   class="fa fa-step-forward"></i></button>
          </div>
-         <a class="btn btn-success" href="{{ url('/ajaxProveedor') }}">Volver</a>
+         <a class="btn btn-success" href="{{ url('/ajaxEmpleado') }}">Volver</a>
       </div>
    </nav>
    <hr>
 </div>
 
-
 <div class="container-fluid" id="contenido">
-   <h3>Proveedores</h3>
-   <button type="button" class="btn btn-success" id="createNewProduct" onclick="agregaProveedor()">Agregar
-      proveedor</button>
+   <div class="text-center">
+      <h3>Empleados</h3>
+   </div>
+   <a class="btn btn-success" id="createNewProduct" onclick="agregaEmpleado()">Agregar empleado</a>
    <hr>
-   <table class="table data-table" id="dataTable">
+   <table class="table table-hover data-table" id="dataTable">
       <thead>
          <tr>
             <th>No</th>
-            <th>Razon social</th>
-            <th>Clave del proveedor</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Tipo Empleado</th>
             <th width="280px">Accion</th>
          </tr>
       </thead>
@@ -201,11 +203,13 @@ $('.chosenPredictivo').chosen({
    no_results_text: "No se encontró información a mostrar"
 });
 $(function() {
+
    $.ajaxSetup({
       headers: {
          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       }
    });
+
    var table = $('.data-table').DataTable({
       "language": {
          "sProcessing": "Procesando...",
@@ -233,18 +237,22 @@ $(function() {
       },
       processing: true,
       serverSide: true,
-      ajax: "{{ route('ajaxProveedor.index') }}",
+      ajax: "{{ route('ajaxEmpleado.index') }}",
       columns: [{
             data: 'DT_RowIndex',
             name: 'DT_RowIndex'
          },
          {
-            data: 'sRazonSocial',
-            name: 'sRazonSocial'
+            data: 'sNombre',
+            name: 'sNombre'
          },
          {
-            data: 'sClaveProveedor',
-            name: 'sClaveProveedor'
+            data: 'sApellidos',
+            name: 'sApellidos'
+         },
+         {
+            data: 'sDescripcion',
+            name: 'sDescripcion',
          },
          {
             data: 'action',
@@ -254,12 +262,15 @@ $(function() {
          },
       ]
    });
+
+
 });
 
-function agregaProveedor() {
+
+function agregaEmpleado() {
    $.ajax({
       type: 'get',
-      url: 'agregaProveedor',
+      url: 'agregaEmpleado',
       success: function(data) {
          $("#cabecera").attr("hidden", false);
          $("#contenido").empty();
@@ -272,11 +283,11 @@ function agregaProveedor() {
    });
 }
 
-function obtenerDetalleProveedor(id) {
+function obtenerDetalleEmpleado(id) {
    $('#loading').show();
    $.ajax({
       type: 'POST',
-      url: "{{ route('ajaxProveedor.store') }}",
+      url: "{{ route('ajaxEmpleado.store') }}",
       data: {
          id: id,
          funcion: 'obtenerDetalle'
@@ -294,11 +305,11 @@ function obtenerDetalleProveedor(id) {
    });
 }
 
-function guardarProveedor() {
+function guardarEmpleado() {
    debugger;
    $('#loading').show();
    var array = [];
-   var arrayProveedor = [];
+   var arrayEmpleado = [];
    /* Obtenemos todos los tr del Body*/
    var rowsBody = $("#TablaDirecciones").find('tbody > tr');
    /* Obtenemos todos los th del Thead */
@@ -312,23 +323,23 @@ function guardarProveedor() {
          obj[rowsHead[j].innerText] = rowsBody[i].getElementsByTagName('td')[j].innerText;
       array.push(obj); /* Añadimos al Array Principal*/
    }
-   var dataProveedor = $('#proveedorForm').serializeArray();
-   for (var i = 0; i < dataProveedor.length; i++) {
+   var dataEmpleado = $('#EmpleadoForm').serializeArray();
+   for (var i = 0; i < dataEmpleado.length; i++) {
       var obj = {};
-      obj[dataProveedor[i]['name']] = dataProveedor[i]['value'];
-      arrayProveedor.push(obj);
+      obj[dataEmpleado[i]['name']] = dataEmpleado[i]['value'];
+      arrayEmpleado.push(obj);
    }
 
-   console.log(arrayProveedor);
+   console.log(arrayEmpleado);
    if (array.length <= 0) {
       alert("Debe ingresar al menos 1 dirección");
       $('#loading').hide();
    } else {
       $.ajax({
          type: 'POST',
-         url: "{{ route('ajaxProveedor.store') }}",
+         url: "{{ route('ajaxEmpleado.store') }}",
          data: {
-            form: arrayProveedor,
+            form: arrayEmpleado,
             direcciones: array,
             funcion: 'crear'
          },
@@ -347,12 +358,12 @@ function guardarProveedor() {
    }
 }
 
-function actualizarProveedor() {
+function actualizarEmpleado() {
    debugger;
-   var id = $("#idProveedor").val();
+   var id = $("#idEmpleado").val();
    $('#loading').show();
    var array = [];
-   var arrayProveedor = [];
+   var arrayEmpleado = [];
    /* Obtenemos todos los tr del Body*/
    var rowsBody = $("#TablaDirecciones").find('tbody > tr');
    /* Obtenemos todos los th del Thead */
@@ -366,23 +377,23 @@ function actualizarProveedor() {
          obj[rowsHead[j].innerText] = rowsBody[i].getElementsByTagName('td')[j].innerText;
       array.push(obj); /* Añadimos al Array Principal*/
    }
-   var dataProveedor = $('#proveedorForm').serializeArray();
-   for (var i = 0; i < dataProveedor.length; i++) {
+   var dataEmpleado = $('#EmpleadoForm').serializeArray();
+   for (var i = 0; i < dataEmpleado.length; i++) {
       var obj = {};
-      obj[dataProveedor[i]['name']] = dataProveedor[i]['value'];
-      arrayProveedor.push(obj);
+      obj[dataEmpleado[i]['name']] = dataEmpleado[i]['value'];
+      arrayEmpleado.push(obj);
    }
 
-   console.log(arrayProveedor);
+   console.log(arrayEmpleado);
    if (array.length <= 0) {
       alert("Debe ingresar al menos 1 dirección");
       $('#loading').hide();
    } else {
       $.ajax({
          type: 'POST',
-         url: "{{ route('ajaxProveedor.store') }}",
+         url: "{{ route('ajaxEmpleado.store') }}",
          data: {
-            form: arrayProveedor,
+            form: arrayEmpleado,
             direcciones: array,
             id: id,
             funcion: 'editar'
@@ -437,7 +448,7 @@ function agregarDireccion() {
          '\',0)"><i class="fas fa-trash-alt enable-disabled"></i></button></td>' +
          '</tr>';
       $('#TablaDirecciones tbody').append(htmlTags);
-      $("#direccionesProveedor").removeAttr('hidden');
+      $("#direccionesEmpleado").removeAttr('hidden');
       $('#loading').hide();
       $('#cerrarModal').click();
    }
@@ -466,9 +477,10 @@ function eliminarDireccion(row, idDireccion) {
       $(row).remove();
 }
 
-function editarProveedor() {
+function editarEmpleado() {
    debugger;
    $("input").removeAttr("disabled");
+   $("select").removeAttr("disabled");
    $("button").removeAttr("disabled");
 }
 
@@ -476,7 +488,7 @@ function fnControles(control, id) {
    debugger;
    $('#loading').show();
    if (id != 1)
-      id = $("#idProveedor").val();
+      id = $("#idEmpleado").val();
 
    if (id == '')
       id = 0;
@@ -492,7 +504,7 @@ function fnControles(control, id) {
          $("#contenido").empty();
          $("#contenido").append(data.html);
          $('#loading').hide();
-         alert("Proveedor recuperado exitosamente");
+         alert("Empleado recuperado exitosamente");
       },
       error: function(data) {
          var errors = data.responseJSON;
@@ -502,17 +514,17 @@ function fnControles(control, id) {
    });
 }
 
-function eliminarProveedor(idProveedor) {
+function eliminarEmpleado(idEmpleado) {
    $.ajax({
       type: 'get',
-      url: 'eliminarProveedor/{idProveedor}',
+      url: 'eliminarEmpleado/{idEmpleado}',
       data: {
-         id: idProveedor
+         id: idEmpleado
       },
       success: function(data) {
          $('#loading').hide();
          location.reload();
-         alert("Proveedor eliminado exitosamente!!");
+         alert("Empleado eliminado exitosamente!!");
       },
       error: function(data) {
          var errors = data.responseJSON;

@@ -19,6 +19,7 @@ class proveedorController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn = '<button data-toggle="tooltip" class="btn btn-primary" data-id="' . $row->kId . '" onclick="obtenerDetalleProveedor(' . $row->kId . ')" data-original-title="Edit">Ver detalle</button>';
+                    $btn = $btn . ' <button data-toggle="tooltip" class="btn btn-danger" data-id="' . $row->kId . '" onclick="eliminarProveedor(' . $row->kId . ')" data-original-title="Edit">Eliminar</button>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -34,9 +35,9 @@ class proveedorController extends Controller
             $proveedor->sRazonSocial = $request->form[1]['inputRazonSocial'];
             $proveedor->sRFC = $request->form[2]['inputRFC'];
             $proveedor->sPersonaContacto = $request->form[7]['inputDatosContacto'];
-            $proveedor->iTelefono1 = $request->form[3]['inputPrimerTelefono'];
-            $proveedor->iTelefono2 = $request->form[4]['inputSegundoTelefono'];
-            $proveedor->iTelefonoMovil = $request->form[5]['inputMovil'];
+            $proveedor->iTelefono1 = (int) $request->form[3]['inputPrimerTelefono'];
+            $proveedor->iTelefono2 = (int) $request->form[4]['inputSegundoTelefono'];
+            $proveedor->iTelefonoMovil = (int) $request->form[5]['inputMovil'];
             $proveedor->sCorreo = $request->form[6]['inputEmail'];
             $proveedor->save();
             $idRegProovedor = $proveedor->kId;
@@ -72,7 +73,7 @@ class proveedorController extends Controller
 
         } else if ($request->funcion == "obtenerDetalle") {
             $proveedor = proveedorModel::where('kId', '=', $request->id)->get();
-            $direcciones = DB::select('select * FROM relProveedorDireccion INNER JOIN catDireccion ON relProveedorDireccion.fkIdDireccion = catDireccion.kId WHERE relProveedorDireccion.fkIdProveedor = :id', ['id' => $request->id]);
+            $direcciones = DB::select('select * FROM relProveedorDireccion INNER JOIN catDireccion ON relProveedorDireccion.fkIdDireccion = catDireccion.kId WHERE catDireccion.bEstatus = 1 and relProveedorDireccion.fkIdProveedor = :id', ['id' => $request->id]);
         } else if ($request->funcion == "editar") {
             proveedorModel::where('kId', '=', $request->id)->update(array(
                 'sRazonSocial' => $request->form[1]['inputRazonSocial'],
@@ -82,8 +83,51 @@ class proveedorController extends Controller
                 'iTelefono2' => $request->form[4]['inputSegundoTelefono'],
                 'iTelefonoMovil' => $request->form[5]['inputMovil'],
                 'sCorreo' => $request->form[6]['inputEmail']));
+            try {
+                $array = $request->direcciones;
+                $array_num = count($array);
+                for ($i = 0; $i < $array_num; ++$i) {
+                    if ($array[$i]['idDireccion'] != 'nvaDireccion') {
+                        DB::statement('call piCreaDireccion(?,?,?,?,?,?,?,?,?,?,?,?,?)', array(
+                            $array[$i]['Calle'],
+                            $array[$i]['Colonia'],
+                            $array[$i]['Municipio'],
+                            $array[$i]['Ciudad'],
+                            $array[$i]['Estado'],
+                            $array[$i]['Pais'],
+                            $array[$i]['Interior'],
+                            $array[$i]['Exterior'],
+                            (int) $array[$i]['CP'],
+                            1, //Estatus
+                            1, //ClienteProveedor
+                            (int) $request->id, //IdClienteProveedor
+                            $array[$i]['idDireccion'],
+                        ));
+                    } else {
+                        DB::statement('call piCreaDireccion(?,?,?,?,?,?,?,?,?,?,?,?,?)', array(
+                            $array[$i]['Calle'],
+                            $array[$i]['Colonia'],
+                            $array[$i]['Municipio'],
+                            $array[$i]['Ciudad'],
+                            $array[$i]['Estado'],
+                            $array[$i]['Pais'],
+                            $array[$i]['Interior'],
+                            $array[$i]['Exterior'],
+                            (int) $array[$i]['CP'],
+                            1, //Estatus
+                            1, //ClienteProveedor
+                            (int) $request->id, //IdClienteProveedor
+                            null,
+                        ));
+                    }
+
+                }
+            } catch (Throwable $e) {
+                return response()->json(['error' => $e, 'success' => 'false', 'html' => view('proveedores._detalleProveedor')->render()]);
+            }
+
             $proveedor = proveedorModel::where('kId', '=', $request->id)->get();
-            $direcciones = DB::select('select * FROM relProveedorDireccion INNER JOIN catDireccion ON relProveedorDireccion.fkIdDireccion = catDireccion.kId WHERE relProveedorDireccion.fkIdProveedor = :id', ['id' => $request->id]);
+            $direcciones = DB::select('select * FROM relProveedorDireccion INNER JOIN catDireccion ON relProveedorDireccion.fkIdDireccion = catDireccion.kId WHERE catDireccion.bEstatus = 1 and relProveedorDireccion.fkIdProveedor = :id', ['id' => $request->id]);
         }
         return response()->json(['error' => '', 'success' => 'true', 'html' =>
             view('proveedores._detalleProveedor', array(
@@ -150,6 +194,18 @@ class proveedorController extends Controller
                 'proveedor' => $proveedor,
                 'direcciones' => $direcciones,
             ))->render()]);
+    }
+
+    public function eliminarDireccion()
+    {
+        $id = $_GET['id'];
+        DB::statement('update catDireccion set catDireccion.bEstatus = 0 where catDireccion.kId = :id', ['id' => $id]);
+    }
+
+    public function eliminarProveedor()
+    {
+        $id = $_GET['id'];
+        DB::statement('update catProveedor set catProveedor.bEstatus = 0 where catProveedor.kId = :id', ['id' => $id]);
     }
 
 }

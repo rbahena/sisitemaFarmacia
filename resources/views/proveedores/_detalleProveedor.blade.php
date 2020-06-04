@@ -82,6 +82,7 @@
          <table class="table" id="TablaDirecciones">
             <thead>
                <tr>
+                  <th scope="col" hidden>idDireccion</th>
                   <th scope="col">Pais</th>
                   <th scope="col">Estado</th>
                   <th scope="col">Ciudad</th>
@@ -97,6 +98,7 @@
             <tbody>
                @foreach($direcciones as $direccion)
                <tr id="r{{$loop->index}}">
+                  <td hidden>{{!empty($direccion->fkIdDireccion) ? $direccion->fkIdDireccion:''}}</td>
                   <td>{{!empty($direccion->sPais) ? $direccion->sPais:''}}</td>
                   <td>{{!empty($direccion->sEstado) ? $direccion->sEstado:''}}</td>
                   <td>{{!empty($direccion->sCiudad) ? $direccion->sCiudad:''}}</td>
@@ -107,8 +109,8 @@
                   <td>{{!empty($direccion->sNumExt) ? $direccion->sNumExt:'S/N'}}</td>
                   <td>{{!empty($direccion->iCodigoPostal) ? $direccion->iCodigoPostal:''}}</td>
                   <td>
-                     <button type="submit" class="btn btn-default" onclick='eliminarDireccion("#r{{$loop->index}}")'
-                        disabled>
+                     <button type="submit" class="btn btn-default"
+                        onclick='eliminarDireccion("#r{{$loop->index}}",{{$direccion->fkIdDireccion}})' disabled>
                         <i class="fas fa-trash-alt enable-disabled"></i>
                      </button>
                   </td>
