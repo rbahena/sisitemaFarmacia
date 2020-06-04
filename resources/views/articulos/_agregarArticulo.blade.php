@@ -478,7 +478,7 @@ function agregarInputCodBarras() {
          '</div>';
       // '<label for="name">Codigo de barras </label> ' +
       // ' <div class="form-inline"><input type="text" class="form-control enable-disabled"  onchange="agregaCodigoBarras(\'#codigoBarras_' +
-      // cont + '\')"  id="codigoBarras_' + cont + '" name="codigoBarras_' + cont + '" value="" maxlength="50">&nbsp;<i class="fa fa-trash-alt"></>' + 
+      // cont + '\')"  id="codigoBarras_' + cont + '" name="codigoBarras_' + cont + '" value="" maxlength="50">&nbsp;<i class="fa fa-trash-alt"></>' +
       // '</div>';
       $(".DivcodigoBarras").append(newCodigo);
    }
@@ -490,13 +490,12 @@ function eliminarImputCodBarrras($id) {
 
 function agregaCodigoBarras() {
    var contador = 1;
-   if($("#codigoBarras_1").length){
-     var nvoCodigo = $("#codigoBarras_1").val();
+   if ($("#codigoBarras_1").length) {
+      var nvoCodigo = $("#codigoBarras_1").val();
       $("#inputCodigosBarras").val(nvoCodigo + ',')
-   }
-   else{
-      
-   var contador = 0;
+   } else {
+
+      var contador = 0;
    }
    var codigos = $("#inputCodigosBarras").val();
    $('.DivcodigoBarras input').each(function() {

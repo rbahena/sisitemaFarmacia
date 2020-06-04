@@ -50,13 +50,14 @@
          <div class="DivcodigoBarras">
             @foreach($catalogos['codigosBarra'] as $codigo)
             <div id="DivCodigoBarras_{{$loop->index}}">
-            <div class="form-inline">
-            <input type="number" class="form-control enable-disabled"
-               id="codigoBarras_{{!empty($codigo->kId) ? $codigo->kId:''}}"
-               name="codigoBarras_{{!empty($codigo->kId) ? $codigo->kId:''}}"
-               value="{{!empty($codigo->sCodigoBarra) ? $codigo->sCodigoBarra:''}}" maxlength="50" disabled>
-               &nbsp;<i title="Eliminar este codifo de barras" class="fas fa-trash-alt enable-disabled" onclick='eliminarImputCodBarrras("#DivCodigoBarras_{{$loop->index}}")' disabled></i>
-            </div>
+               <div class="form-inline">
+                  <input type="number" class="form-control enable-disabled"
+                     id="codigoBarras_{{!empty($codigo->kId) ? $codigo->kId:''}}"
+                     name="codigoBarras_{{!empty($codigo->kId) ? $codigo->kId:''}}"
+                     value="{{!empty($codigo->sCodigoBarra) ? $codigo->sCodigoBarra:''}}" maxlength="50" disabled>
+                  &nbsp;<i title="Eliminar este codifo de barras" class="fas fa-trash-alt enable-disabled"
+                     onclick='eliminarImputCodBarrras("#DivCodigoBarras_{{$loop->index}}")' disabled></i>
+               </div>
             </div>
             @endforeach
          </div>

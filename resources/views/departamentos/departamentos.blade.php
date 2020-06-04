@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="text-center">
-<h3>Agrega, edita o elimina departamentos</h3>
+   <h3>Agrega, edita o elimina departamentos</h3>
 </div>
 <a class="btn btn-success" href="javascript:void(0)" id="createNewProduct">Agregar nuevo</a>
 <hr>
@@ -57,7 +57,7 @@ $(function() {
    });
 
    var table = $('.data-table').DataTable({
-    "language": {
+      "language": {
          "sProcessing": "Procesando...",
          "sLengthMenu": "Mostrar _MENU_ registros",
          "sZeroRecords": "No se encontraron resultados",
@@ -81,8 +81,8 @@ $(function() {
             "sSortDescending": ": Activar para ordenar la columna de manera descendente"
          }
       },
-    processing: true,
-        serverSide: true,
+      processing: true,
+      serverSide: true,
       ajax: "{{ route('ajaxDepartamento.index') }}",
       columns: [{
             data: 'DT_RowIndex',
@@ -123,8 +123,8 @@ $(function() {
    });
 
    $('#saveBtn').click(function(e) {
-       
-   $('#loading').show();
+
+      $('#loading').show();
       e.preventDefault();
       $.ajax({
          data: $('#productForm').serialize(),
