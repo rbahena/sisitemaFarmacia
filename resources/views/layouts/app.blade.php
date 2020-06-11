@@ -24,6 +24,9 @@
    <script src="{{ asset('../js/layoutScript.js') }}"></script>
    <script src="{{ asset('../js/chosen.jquery.js') }}"></script>
 
+   <script src="{{ asset('../js/js_plugin/bootstable.js') }}"></script>
+
+
 </head>
 
 <body id="page-top">
@@ -38,8 +41,8 @@
             <div class="sidebar-brand-icon ">
             <i class="fas fa-clinic-medical"></i>
                <i class="fas fa-first-aid"></i> -->
-            <!-- <img  src="../images/icon-farmacia.png" alt="" width="50" height="50" > -->
-            <!-- </div>
+         <!-- <img  src="../images/icon-farmacia.png" alt="" width="50" height="50" > -->
+         <!-- </div>
             <div class="sidebar-brand-text mx-3">interGenerica</div>
          </a> -->
 
@@ -49,12 +52,12 @@
          <!-- Nav Item - Dashboard -->
          <li class="nav-item active">
             <a class="nav-link" href="{{ url('/home') }}">
-            <i class="fas fa-clinic-medical"></i>
+               <i class="fas fa-clinic-medical"></i>
                <span>Inicio</span></a>
          </li>
          <hr class="sidebar-divider">
-<br>
-<br>
+         <br>
+         <br>
          <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#lstInventario"
                aria-expanded="true" aria-controls="lstInventario">
@@ -63,11 +66,16 @@
             </a>
             <div id="lstInventario" class="collapse" aria-labelledby="lstInventario" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
-               <a class="collapse-item efectoHover"  href="{{ url('/moduloInventario')}}" onclick='mostrarLoading()'>Ver todo</a>
-                  <a class="collapse-item efectoHover"  href="{{ url('/verInventario')}}" onclick='mostrarLoading()'>Nuestro inventario</a>
-                  <a class="collapse-item" href="{{ url('/detalleArticulo') }}" onclick='mostrarLoading()'>Admin de productos</a>
-                  <a class="collapse-item" href="{{ url('/ajaxDepartamento') }}" onclick='mostrarLoading()'>Departamentos</a>
-                  <a class="collapse-item" href="{{ url('/ajaxlaboratorio') }}" onclick='mostrarLoading()'>Laboratorios</a>
+                  <a class="collapse-item efectoHover" href="{{ url('/moduloInventario')}}"
+                     onclick='mostrarLoading()'>Ver todo</a>
+                  <a class="collapse-item efectoHover" href="{{ url('/verInventario')}}"
+                     onclick='mostrarLoading()'>Nuestro inventario</a>
+                  <a class="collapse-item" href="{{ url('/detalleArticulo') }}" onclick='mostrarLoading()'>Admin de
+                     productos</a>
+                  <a class="collapse-item" href="{{ url('/ajaxDepartamento') }}"
+                     onclick='mostrarLoading()'>Departamentos</a>
+                  <a class="collapse-item" href="{{ url('/ajaxlaboratorio') }}"
+                     onclick='mostrarLoading()'>Laboratorios</a>
                   <a class="collapse-item" href="{{ url('/ajaxLista') }}" onclick='mostrarLoading()'>Tipos de lista</a>
                   <a class="collapse-item" href="{{ url('/ajaxAlmacen') }}" onclick='mostrarLoading()'>Almacenes</a>
                </div>
@@ -76,15 +84,18 @@
 
          <hr class="sidebar-divider">
          <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#lstAdmin"
-               aria-expanded="true" aria-controls="lstAdmin">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#lstAdmin" aria-expanded="true"
+               aria-controls="lstAdmin">
                <i class="fas fa-tools"></i>
                <span>Administración</span>
             </a>
             <div id="lstAdmin" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
-                  <a class="collapse-item" href="{{ url('/moduloAdministracion') }}" onclick='mostrarLoading()'>Ver todos</a>
+                  <a class="collapse-item" href="{{ url('/moduloAdministracion') }}" onclick='mostrarLoading()'>Ver
+                     todos</a>
                   <a class="collapse-item" href="{{ url('/ajaxEmpleado') }}" onclick='mostrarLoading()'>Empleados</a>
+                  <a class="collapse-item" href="{{ url('/ordenCompra') }}" onclick='mostrarLoading()'>Orden de
+                     compras</a>
                   <a class="collapse-item" href="{{ url('/notFound') }}">Empresas</a>
                   <a class="collapse-item" href="{{ url('/notFound') }}">Cuentas bancarias</a>
                </div>
@@ -102,11 +113,12 @@
                <div class="bg-white py-2 collapse-inner rounded">
                   <a class="collapse-item" href="{{ url('/moduloServicios') }}" onclick='mostrarLoading()'>Ver todos</a>
                   <a class="collapse-item" href="{{ url('/ajaxProveedor') }}" onclick='mostrarLoading()'>Proveedores</a>
-                  <a class="collapse-item" href="{{ url('/notFound') }}" onclick='mostrarLoading()'>Clientes mayoristas</a>
+                  <a class="collapse-item" href="{{ url('/notFound') }}" onclick='mostrarLoading()'>Clientes
+                     mayoristas</a>
                </div>
             </div>
          </li>
-         
+
          <!-- Divider -->
          <hr class="sidebar-divider d-none d-md-block">
 
@@ -412,6 +424,7 @@
    <script src="{{ asset('../js/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
    <script src="{{ asset('../vendor/datatables/jquery.dataTables.min.js') }}" defer></script>
    <script src="{{ asset('../vendor/datatables/dataTables.bootstrap4.min.js') }}" defer></script>
+
 </body>
 
 </html>
