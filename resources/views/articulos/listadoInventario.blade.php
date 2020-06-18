@@ -98,7 +98,7 @@ $(document).ready(function() {
          type: 'get',
          url: 'agregarArticulo',
          success: function(data) {
-            debugger;
+             
             console.log(data);
             $("#contenido").empty();
             $("#contenido").append(data);

@@ -359,7 +359,7 @@ $(function() {
 
    $("#btnGuardar").click(function() {
       $('#loading').show();
-      debugger;
+       
       console.log($('#inputImgBase64').val());
       $("#btnGuardar").attr("disabled", true);
       $("#btnCancelar").attr("disabled", true);
@@ -463,7 +463,7 @@ function readFile() {
 }
 
 function agregarInputCodBarras() {
-   debugger;
+    
    if (!$('#codigoBarras_1').is(':disabled')) {
       cont++;
       newCodigo =

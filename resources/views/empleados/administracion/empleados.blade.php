@@ -306,7 +306,7 @@ function obtenerDetalleEmpleado(id) {
 }
 
 function guardarEmpleado() {
-   debugger;
+    
    $('#loading').show();
    var array = [];
    var arrayEmpleado = [];
@@ -359,7 +359,7 @@ function guardarEmpleado() {
 }
 
 function actualizarEmpleado() {
-   debugger;
+    
    var id = $("#idEmpleado").val();
    $('#loading').show();
    var array = [];
@@ -414,7 +414,7 @@ function actualizarEmpleado() {
 }
 
 function agregarDireccion() {
-   debugger;
+    
    var rowCount = $('#TablaDirecciones >tbody >tr').length
    var pais = ($("#selectPais option:selected").text() !== 'Elegir opción') ? $(
       "#selectPais option:selected").text() : '';
@@ -478,14 +478,14 @@ function eliminarDireccion(row, idDireccion) {
 }
 
 function editarEmpleado() {
-   debugger;
+    
    $("input").removeAttr("disabled");
    $("select").removeAttr("disabled");
    $("button").removeAttr("disabled");
 }
 
 function fnControles(control, id) {
-   debugger;
+    
    $('#loading').show();
    if (id != 1)
       id = $("#idEmpleado").val();

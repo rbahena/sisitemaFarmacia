@@ -292,7 +292,7 @@ function obtenerDetalleProveedor(id) {
 }
 
 function guardarProveedor() {
-   debugger;
+    
    $('#loading').show();
    var array = [];
    var arrayProveedor = [];
@@ -345,7 +345,7 @@ function guardarProveedor() {
 }
 
 function actualizarProveedor() {
-   debugger;
+    
    var id = $("#idProveedor").val();
    $('#loading').show();
    var array = [];
@@ -400,7 +400,7 @@ function actualizarProveedor() {
 }
 
 function agregarDireccion() {
-   debugger;
+    
    var rowCount = $('#TablaDirecciones >tbody >tr').length
    var pais = ($("#selectPais option:selected").text() !== 'Elegir opción') ? $(
       "#selectPais option:selected").text() : '';
@@ -464,13 +464,13 @@ function eliminarDireccion(row, idDireccion) {
 }
 
 function editarProveedor() {
-   debugger;
+    
    $("input").removeAttr("disabled");
    $("button").removeAttr("disabled");
 }
 
 function fnControles(control, id) {
-   debugger;
+    
    $('#loading').show();
    if (id != 1)
       id = $("#idProveedor").val();

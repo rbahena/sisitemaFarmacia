@@ -135,7 +135,7 @@
                <th scope="col">Unidades</th>
                <th scope="col">Impuesto</th>
                <th scope="col">Precio&nbsp;compra</th>
-               <th scope="col">Total</th>
+               <th scope="col">Total&nbsp;compra</th>
             </tr>
          </thead>
          <tbody>
@@ -245,7 +245,7 @@ $("#selectProveedor").change(function() {
          id: idProveedor
       },
       success: function(data) {
-         debugger;
+          
          if (data.success == 'true') {
             $("#inputRazonSocial").val(data.razonSocial['sRazonSocial']);
             $("#inputPersonaContacto").val(data.personaContacto['sPersonaContacto']);
@@ -261,7 +261,7 @@ $("#selectProveedor").change(function() {
 });
 
 function obtenDetalleProd(indice) {
-   debugger;
+    
    $('#loading').show();
    var id = "#selectClaveProducto" + indice;
    var idProducto = $(id).val();
@@ -272,7 +272,7 @@ function obtenDetalleProd(indice) {
          id: idProducto
       },
       success: function(data) {
-         debugger;
+          
          if (data.success == 'true') {
             $("#inputDescProducto_" + indice).val(data.data['sDescripcion'])
             $("#inputPrecio_" + indice).val(data.data['dPrecioCompra'])
@@ -288,6 +288,38 @@ function obtenDetalleProd(indice) {
          $('#loading').hide();
       }
    });
+}
+
+function calculaTotal(indice) {
+   $('#loading').show();
+   var unidades = $("#inputUnidades_" + indice).val();
+   var porcenDescuento = $("#inputPorcientoDescuento_" + indice).val();
+   var precioCompra = $("#inputPrecio_" + indice).val();
+   if (precioCompra == 'undefined') {
+      alert("debe seleccionar 1 producto");
+   } else {
+      var total = precioCompra * unidades;
+      var decuentoPorcentaje = (porcenDescuento / 100) * total;
+      var totalDescuento = total - decuentoPorcentaje;
+      $("#inputTotal_" + indice).val(totalDescuento);
+   }
+   $('#loading').hide();
+}
+
+function guardarRow(indice) {
+    
+   $("#row_" + indice + " input").prop('disabled', true);
+   $("#row_" + indice + " select").prop('disabled', true);
+   $("#guardar_" + indice).attr("hidden", true);
+   $("#editar_" + indice).attr("hidden", false);
+}
+
+function editarRow(indice) {
+    
+   $("#row_" + indice + " input").prop('disabled', false);
+   $("#row_" + indice + " select").prop('disabled', false);
+   $("#guardar_" + indice).attr("hidden", false);
+   $("#editar_" + indice).attr("hidden", true);
 }
 
 $("#agregarRow").click(function() {
@@ -314,7 +346,8 @@ $("#agregarRow").click(function() {
       '<td> <input type="number" class="form-control enable-disabled" id="inputArtiXunidad_' + rowCount +
       '" name="inputArtiXunidad_' + rowCount + '" placeholder="Ej: 1000"></td>' +
       '<td> <input type="number" class="form-control enable-disabled" id="inputUnidades_' + rowCount +
-      '" name="inputUnidades_' + rowCount + '" placeholder="ej. 40"></td>' +
+      '" name="inputUnidades_' + rowCount + '" onchange="calculaTotal(' + rowCount +
+      ');" placeholder="ej. 40"></td>' +
       '<td> <div class="text-center"> <i class="far fa-circle bigIcon" id="checkImpuesto_' + rowCount +
       '" name ="checkImpuesto_' + rowCount + '" title="Si aplica impuesto"></i> </div> </td>' +
       '<td> <input type="number" class="form-control enable-disabled" id="inputPrecio_' + rowCount +
@@ -322,7 +355,11 @@ $("#agregarRow").click(function() {
       '<td> <input type="number" class="form-control enable-disabled" id="inputTotal_' + rowCount +
       '" name="inputTotal_' + rowCount + '" placeholder="Ej: 105.00" disabled></td>' +
       '<td> <i class="far fa-save bigIcon" title="Guardar cambios" id="guardar_' + rowCount + '" name="guardar_' +
-      rowCount + '"></i></td>' +
+      rowCount + '" onclick="guardarRow(' + rowCount +
+      ')"  style="cursor: pointer;"></i> ' +
+      '<i class="fas fa-edit bigIcon" title="Editar Cambios" id="editar_' + rowCount + '" name="editar_' +
+      rowCount + '" onclick="editarRow(' + rowCount +
+      ')"  style="cursor: pointer;" hidden></i></td>' +
       '</tr>';
    $('#tableProdcutosOrden tbody').append(nvoRegistro);
    $('.chosenPredictivo').trigger("chosen:updated");
