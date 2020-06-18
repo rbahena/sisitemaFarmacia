@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\departamento;
 use App\Models\articulo;
+use App\Models\departamento;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class inventarioController extends Controller
 {
-    public function verInventario(){
+    public function verInventario()
+    {
         $departamentos = departamento::orderBy('sDescripcion', 'ASC')->where('bEstatus', '=', 1)->get();
         $inventario = articulo::orderBy('sArticulo', 'desc')->where('bEstatus', '=', 1)->get();
         return view('empleados.vendedor.inventarioCrud', array(
@@ -18,8 +19,9 @@ class inventarioController extends Controller
         ))->with('success', 'Lista de compras.');
     }
 
-    public function agregarArticulo(Request $request){
-        
+    public function agregarArticulo(Request $request)
+    {
+
         $nuevoArticulo = new articulo();
 
         $nuevoArticulo->sArticulo = strtoupper($request->input('nombreArticulo'));

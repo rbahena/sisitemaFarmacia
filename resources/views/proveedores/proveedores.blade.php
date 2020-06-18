@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div id="cabecera" hidden>
    <div class="container text-center">
@@ -66,7 +65,6 @@
             </button>
          </div>
 
-         <!-- Modal para agregar direccion -->
          <div class="modal-body">
             <form>
                <div class="row">
@@ -186,7 +184,6 @@
             <button type="button" class="btn btn-primary" id="agregarDireccion" onclick="agregarDireccion()">Agregar
                dirección</button>
          </div>
-         <!-- /Modal para agregar direccion -->
 
       </div>
    </div>

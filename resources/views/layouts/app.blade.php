@@ -24,8 +24,6 @@
    <script src="{{ asset('../js/layoutScript.js') }}"></script>
    <script src="{{ asset('../js/chosen.jquery.js') }}"></script>
 
-   <script src="{{ asset('../js/js_plugin/bootstable.js') }}"></script>
-
 
 </head>
 

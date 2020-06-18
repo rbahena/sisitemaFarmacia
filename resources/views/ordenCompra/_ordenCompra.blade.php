@@ -35,7 +35,7 @@
 </div>
 
 <div id="ordenCompra" class="container-fluid">
-   <form id="formOrdenCompra">
+   <form id="formPrimeraSeccion">
       <div id="primeraSeccion">
          <div class="row">
             <div class="col-xs-12 col-md-4">
@@ -43,8 +43,11 @@
                   <label for="selectProveedor">Clave Proveedor*</label>
                   <select class="form-control chosenPredictivo enable-disabled" name="selectProveedor"
                      id="selectProveedor" required>
-                     <option value="Elegir" id="AF">Elegir opción</option>
-                     <option value="1">P-001</option>
+                     <option selected="true" disabled="disabled">Seleccionar una opción</option>
+                     @foreach($proveedores as $proveedor)
+                     <option value='{{$proveedor->kId}}'>{{$proveedor->sClaveProveedor}} / {{$proveedor->sRazonSocial}}
+                     </option>
+                     @endforeach
                   </select>
                </div>
             </div>
@@ -52,7 +55,7 @@
                <div class="form-group">
                   <label for="numeroOrden">Numero de Orden*</label>
                   <input type="number" class="form-control enable-disabled" id="inputNumeroOrden"
-                     name="inputNumeroOrden" placeholder="Ej: 000001" required autocomplete="off">
+                     name="inputNumeroOrden" placeholder="Ej: 000001" disabled>
                </div>
             </div>
             <div class="col-xs-12 col-md-4">
@@ -76,10 +79,8 @@
                   <label for="estatusOrden">Estatus de Orden</label>
                   <select class="form-control chosenPredictivo enable-disabled" name="selectEstatusOrden"
                      id="selectEstatusOrden" disabled>
-                     <option value="Elegir" id="AF">Elegir opción</option>
-                     <option value="1">Abierta</option>
-                     <option value="2">Pendiente</option>
-                     <option value="3">Completada</option>
+                     <option value="1"><strong>PENDIENTE</strong></option>
+                     <option value="2"><strong>COMPLETADA</strong></option>
                   </select>
                </div>
 
@@ -96,8 +97,8 @@
             <div class="col-xs-12 col-md-4">
                <div class="form-group">
                   <label for="personaContacto">Persona de contacto*</label>
-                  <input type="text" class="form-control enable-disabled" id="personaContacto" name="personaContacto"
-                     placeholder="Ej: LUIS CUEVAS" disabled>
+                  <input type="text" class="form-control enable-disabled" id="inputPersonaContacto"
+                     name="inputPersonaContacto" placeholder="Ej: LUIS CUEVAS" disabled>
                </div>
             </div>
             <div class="col-xs-12 col-md-4">
@@ -116,53 +117,44 @@
             </div>
          </div>
       </div>
+   </form>
+   <br>
+   <div id="formSegundaSeccion">
+      <button type="button" class="btn btn-primary" id="agregarRow"><i class="fas fa-plus"></i>
+         Agregar producto</button>
       <br>
-      <div id="tablaOrdenCompra">
-         <small class="form-text text-muted enable-disabled" style="cursor: pointer;" id="but_add"><i
-               class="fas fa-plus"></i><a disabled>&nbsp;&nbsp; Haz clic para agregar
-               una fila más a la tabla
-            </a></small>
-         <br>
-         <table class="table" id="makeEditable">
-            <thead>
-               <tr>
-                  <th>% de descuento</th>
-                  <th>Almacén</th>
-                  <th>Articulos por unidad</th>
-                  <th>Unidades</th>
-                  <th>Clave del producto</th>
-                  <th>Descripción del articulo</th>
-                  <th>Impuestos</th>
-                  <th>Precio</th>
-                  <th>Total</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td>0.00</td>
-                  <td></td>
-                  <td>0.00</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-               </tr>
-            </tbody>
-         </table>
-      </div>
-      <br>
-      <div id="segundaSeccion">
+      <table class="table table-bordered" id="tableProdcutosOrden">
+         <thead>
+            <tr>
+               <th scope="col"></th>
+               <th scope="col">% de Descuento</th>
+               <th scope="col">Almacén&nbsp;destino</th>
+               <th scope="col">Clave&nbsp;del&nbsp;producto</th>
+               <th scope="col">Descripción&nbsp;del&nbsp;producto</th>
+               <th scope="col">Articulos&nbsp;por&nbsp;unidad</th>
+               <th scope="col">Unidades</th>
+               <th scope="col">Impuesto</th>
+               <th scope="col">Precio&nbsp;compra</th>
+               <th scope="col">Total</th>
+            </tr>
+         </thead>
+         <tbody>
+         </tbody>
+      </table>
+   </div>
+
+   <br>
+   <form id="formTercerSeccion">
+      <div id="terceSeccion">
          <div class="row">
             <div class="col-xs-12 col-md-4">
                <label for="encargadoCompra">Encargado de compra*</label>
                <select class="form-control chosenPredictivo enable-disabled" name="selectEncargadoCompra"
                   id="selectEncargadoCompra" required>
-                  <option value="Elegir" id="AF">Elegir opción</option>
-                  <option value="1">Luis</option>
-                  <option value="2">Raul</option>
-                  <option value="3">Omar</option>
+                  <option selected="true" disabled="disabled">Seleccionar una opción</option>
+                  @foreach($empleados as $empleado)
+                  <option value='{{$empleado->kId}}'>{{$empleado->sNombre}} {{$empleado->sApellidos}}</option>
+                  @endforeach
                </select>
             </div>
             <div class="col-xs-12 col-md-5">
@@ -216,6 +208,7 @@
          </div>
       </div>
    </form>
+
    <div class="renglon" id="btnAcciones">
       <a class="btn btn-danger btnAcciones" href="{{ url('/ajaxProveedor') }}">Cancelar</a>
       <button type="button" class="btn btn-warning btnAcciones" id="btnEditar"
@@ -225,6 +218,7 @@
    </div>
 </div>
 @endsection
+
 @section('script')
 <script type="text/javascript">
 $('.chosenPredictivo').chosen({
@@ -232,17 +226,148 @@ $('.chosenPredictivo').chosen({
    placeholder_text_single: "Seleccione una opción",
    no_results_text: "No se encontró información a mostrar"
 });
-
-$('#makeEditable').SetEditable({
-   $addButton: $('#but_add'),
-   onEdit: function() {},
-   onDelete: function() {},
-   onBeforeDelete: function() {},
-   onAdd: function() {
-      
-   }
+$(function() {
+   $.ajaxSetup({
+      headers: {
+         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+   });
+   $("#agregarRow").click();
 });
+
+$("#selectProveedor").change(function() {
+   $('#loading').show();
+   var idProveedor = $("#selectProveedor").val();
+   $.ajax({
+      type: 'get',
+      url: 'obtenerDatosProveedor/{id}',
+      data: {
+         id: idProveedor
+      },
+      success: function(data) {
+         debugger;
+         if (data.success == 'true') {
+            $("#inputRazonSocial").val(data.razonSocial['sRazonSocial']);
+            $("#inputPersonaContacto").val(data.personaContacto['sPersonaContacto']);
+         }
+         $('#loading').hide();
+      },
+      error: function(data) {
+         var errors = data.responseJSON;
+         console.table(errors);
+         $('#loading').hide();
+      }
+   });
+});
+
+function obtenDetalleProd(indice) {
+   debugger;
+   $('#loading').show();
+   var id = "#selectClaveProducto" + indice;
+   var idProducto = $(id).val();
+   $.ajax({
+      type: 'get',
+      url: 'obtenerDatosProducto/{id}',
+      data: {
+         id: idProducto
+      },
+      success: function(data) {
+         debugger;
+         if (data.success == 'true') {
+            $("#inputDescProducto_" + indice).val(data.data['sDescripcion'])
+            $("#inputPrecio_" + indice).val(data.data['dPrecioCompra'])
+            if (data.data['bImpIva'] != '0') {
+               $("#checkImpuesto_" + indice).toggleClass('fa-circle fa-check-circle');
+            }
+         }
+         $('#loading').hide();
+      },
+      error: function(data) {
+         var errors = data.responseJSON;
+         console.table(errors);
+         $('#loading').hide();
+      }
+   });
+}
+
+$("#agregarRow").click(function() {
+   $('#loading').show();
+   var almacenes = getAlmacenes();
+   var productos = getProductos();
+   var rowCount = $('#tableProdcutosOrden >tbody >tr').length + 1;
+   // var rowCount = $('table#productosOrdenCompra tr:last').index() + 1;
+   nvoRegistro =
+      '<tr id="row_' + rowCount + '">' +
+      '<th scope="row">' + rowCount + '</th>' +
+      '<td><input type="number" class="form-control enable-disabled" id="inputPorcientoDescuento_' + rowCount +
+      '" name="inputPorcientoDescuento_' + rowCount + '" placeholder="Ej: 15"></td>' +
+      '<td> <select name="selectAlmacen_' + rowCount + '" id="selectAlmacen_' + rowCount +
+      '" class="form-control chosenPredictivo">' +
+      almacenes +
+      '</select></td>' +
+      '<td><select name="selectClaveProducto_' + rowCount + '" id="selectClaveProducto' + rowCount +
+      '" class="form-control chosenPredictivo" onchange="obtenDetalleProd(' + rowCount + ');">' +
+      productos +
+      '</select></td>' +
+      '<td> <input type="text" class="form-control enable-disabled" id="inputDescProducto_' + rowCount +
+      '" name="inputDescProducto_' + rowCount + '" placeholder="ej. Tabletas 90.10 Grms" disabled></td>' +
+      '<td> <input type="number" class="form-control enable-disabled" id="inputArtiXunidad_' + rowCount +
+      '" name="inputArtiXunidad_' + rowCount + '" placeholder="Ej: 1000"></td>' +
+      '<td> <input type="number" class="form-control enable-disabled" id="inputUnidades_' + rowCount +
+      '" name="inputUnidades_' + rowCount + '" placeholder="ej. 40"></td>' +
+      '<td> <div class="text-center"> <i class="far fa-circle bigIcon" id="checkImpuesto_' + rowCount +
+      '" name ="checkImpuesto_' + rowCount + '" title="Si aplica impuesto"></i> </div> </td>' +
+      '<td> <input type="number" class="form-control enable-disabled" id="inputPrecio_' + rowCount +
+      '" name="inputPrecio_' + rowCount + '" placeholder="Ej: 35.00" disabled></td>' +
+      '<td> <input type="number" class="form-control enable-disabled" id="inputTotal_' + rowCount +
+      '" name="inputTotal_' + rowCount + '" placeholder="Ej: 105.00" disabled></td>' +
+      '<td> <i class="far fa-save bigIcon" title="Guardar cambios" id="guardar_' + rowCount + '" name="guardar_' +
+      rowCount + '"></i></td>' +
+      '</tr>';
+   $('#tableProdcutosOrden tbody').append(nvoRegistro);
+   $('.chosenPredictivo').trigger("chosen:updated");
+   $('#loading').hide();
+});
+
+function getAlmacenes() {
+   var selectAlmacen = '<option selected="true" disabled="disabled">Seleccionar una opción</option>';
+   $.ajax({
+      async: false,
+      type: "post",
+      url: 'obtenerAlmacenes',
+      success: function(data) {
+         $.each(data, function(key, almacen) {
+            selectAlmacen = selectAlmacen + '<option value=' + almacen.kId + '>' + almacen.sAlmacen +
+               '</option>';
+         });
+      },
+      error: function(data) {
+         console.log(data);
+         alert('error');
+      }
+   });
+   return selectAlmacen;
+}
+
+function getProductos() {
+   var selectProductos = '<option selected="true" disabled="disabled">Seleccionar una opción</option>';
+   $.ajax({
+      async: false,
+      type: "post",
+      url: 'obtenerProductos',
+      success: function(data) {
+         $.each(data, function(key, producto) {
+            selectProductos = selectProductos + '<option value=' + producto.kId + '>' + producto
+               .sArticulo +
+               '</option>';
+         });
+      },
+      error: function(data) {
+         console.log(data);
+         alert('error');
+      }
+   });
+   return selectProductos;
+}
 </script>
-
-
 @endsection

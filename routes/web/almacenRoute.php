@@ -1,2 +1,2 @@
 <?php
-Route::resource('ajaxAlmacen','almacenController');
+Route::resource('ajaxAlmacen', 'almacenController');
