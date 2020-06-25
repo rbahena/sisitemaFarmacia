@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
 <div id="herramientasBusqueda">
    <div class="container text-center">
       <h3>Agrega, consulta y/o edita las ordenes de compra</h3>
@@ -36,90 +37,89 @@
 
 <div id="ordenCompra" class="container-fluid">
    <form id="formPrimeraSeccion">
-      <div id="primeraSeccion">
-         <div class="row">
-            <div class="col-xs-12 col-md-4">
-               <div class="form-group">
-                  <label for="selectProveedor">Clave Proveedor*</label>
-                  <select class="form-control chosenPredictivo enable-disabled" name="selectProveedor"
-                     id="selectProveedor" required>
-                     <option selected="true" disabled="disabled">Seleccionar una opción</option>
-                     @foreach($proveedores as $proveedor)
-                     <option value='{{$proveedor->kId}}'>{{$proveedor->sClaveProveedor}} / {{$proveedor->sRazonSocial}}
-                     </option>
-                     @endforeach
-                  </select>
-               </div>
-            </div>
-            <div class="col-xs-12 col-md-4">
-               <div class="form-group">
-                  <label for="numeroOrden">Numero de Orden*</label>
-                  <input type="number" class="form-control enable-disabled" id="inputNumeroOrden"
-                     name="inputNumeroOrden" placeholder="Ej: 000001" disabled>
-               </div>
-            </div>
-            <div class="col-xs-12 col-md-4">
-               <div class="form-group">
-                  <label for="fechaContabilizacion">Fecha contabilización</label>
-                  <input type="date" class="form-control enable-disabled" id="inputFechaContabilizacion"
-                     name="inputFechaContabilizacion" disabled>
-               </div>
+      <div class="row">
+         <div class="col-xs-12 col-md-4">
+            <div class="form-group">
+               <label for="selectProveedor">Clave Proveedor*</label>
+               <select class="form-control chosenPredictivo enable-disabled" name="selectProveedor" id="selectProveedor"
+                  required>
+                  <option selected="true" disabled="disabled">Seleccionar una opción</option>
+                  @foreach($proveedores as $proveedor)
+                  <option value='{{$proveedor->kId}}'>{{$proveedor->sClaveProveedor}} / {{$proveedor->sRazonSocial}}
+                  </option>
+                  @endforeach
+               </select>
             </div>
          </div>
-         <div class="row">
-            <div class="col-xs-12 col-md-4">
-               <div class="form-group">
-                  <label for="razonSocial">Razon social*</label>
-                  <input type="text" class="form-control enable-disabled" id="inputRazonSocial" name="inputRazonSocial"
-                     placeholder="Ej: PROVEEDOR S.A. DE C.V." disabled>
-               </div>
+         <div class="col-xs-12 col-md-4">
+            <div class="form-group">
+               <label for="numeroOrden">Numero de Orden*</label>
+               <input type="number" class="form-control enable-disabled" id="inputNumeroOrden" name="inputNumeroOrden"
+                  placeholder="Ej: 000001" disabled>
             </div>
-            <div class="col-xs-12 col-md-4">
-               <div class="form-group">
-                  <label for="estatusOrden">Estatus de Orden</label>
-                  <select class="form-control chosenPredictivo enable-disabled" name="selectEstatusOrden"
-                     id="selectEstatusOrden" disabled>
-                     <option value="1"><strong>PENDIENTE</strong></option>
-                     <option value="2"><strong>COMPLETADA</strong></option>
-                  </select>
-               </div>
+         </div>
+         <div class="col-xs-12 col-md-4">
+            <div class="form-group">
+               <label for="fechaContabilizacion">Fecha contabilización</label>
+               <input type="date" class="form-control enable-disabled" id="inputFechaContabilizacion"
+                  name="inputFechaContabilizacion" disabled>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-xs-12 col-md-4">
+            <div class="form-group">
+               <label for="razonSocial">Razon social*</label>
+               <input type="text" class="form-control enable-disabled" id="inputRazonSocial" name="inputRazonSocial"
+                  placeholder="Ej: PROVEEDOR S.A. DE C.V." disabled>
+            </div>
+         </div>
+         <div class="col-xs-12 col-md-4">
+            <div class="form-group">
+               <label for="estatusOrden">Estatus de Orden</label>
+               <select class="form-control chosenPredictivo enable-disabled" name="selectEstatusOrden"
+                  id="selectEstatusOrden" disabled>
+                  <option value="1" selected><strong>PENDIENTE</strong></option>
+                  <option value="2"><strong>COMPLETADA</strong></option>
+               </select>
+            </div>
 
-            </div>
-            <div class="col-xs-12 col-md-4">
-               <div class="form-group">
-                  <label for="fechaEntrega">Fecha de entrega</label>
-                  <input type="date" class="form-control enable-disabled" id="inputFechaEntrega"
-                     name="inputFechaEntrega" required>
-               </div>
+         </div>
+         <div class="col-xs-12 col-md-4">
+            <div class="form-group">
+               <label for="fechaEntrega">Fecha de entrega*</label>
+               <input type="date" class="form-control enable-disabled" id="inputFechaEntrega" name="inputFechaEntrega"
+                  required>
             </div>
          </div>
-         <div class="row">
-            <div class="col-xs-12 col-md-4">
-               <div class="form-group">
-                  <label for="personaContacto">Persona de contacto*</label>
-                  <input type="text" class="form-control enable-disabled" id="inputPersonaContacto"
-                     name="inputPersonaContacto" placeholder="Ej: LUIS CUEVAS" disabled>
-               </div>
+      </div>
+      <div class="row">
+         <div class="col-xs-12 col-md-4">
+            <div class="form-group">
+               <label for="personaContacto">Persona de contacto*</label>
+               <input type="text" class="form-control enable-disabled" id="inputPersonaContacto"
+                  name="inputPersonaContacto" placeholder="Ej: LUIS CUEVAS" disabled>
             </div>
-            <div class="col-xs-12 col-md-4">
-               <div class="form-group">
-                  <label for="numeroFactura">Numero de factura*</label>
-                  <input type="text" class="form-control enable-disabled" id="inputNumeroFactura"
-                     name="inputNumeroFactura" placeholder="Ej: ABC-0001" required>
-               </div>
+         </div>
+         <div class="col-xs-12 col-md-4">
+            <div class="form-group">
+               <label for="numeroFactura">Numero de factura*</label>
+               <input type="text" class="form-control enable-disabled" id="inputNumeroFactura" name="inputNumeroFactura"
+                  placeholder="Ej: ABC-0001" required>
             </div>
-            <div class="col-xs-12 col-md-4">
-               <div class="form-group">
-                  <label for="fechaDocumento">Fecha de documento</label>
-                  <input type="date" class="form-control enable-disabled" id="inpurFechaDocumento"
-                     name="inputFechaDocumento" required>
-               </div>
+         </div>
+         <div class="col-xs-12 col-md-4">
+            <div class="form-group">
+               <label for="fechaDocumento">Fecha de documento*</label>
+               <input type="date" class="form-control enable-disabled" id="inpurFechaDocumento"
+                  name="inputFechaDocumento" required>
             </div>
          </div>
       </div>
    </form>
    <br>
-   <div id="formSegundaSeccion">
+
+   <div id="tablaProductos">
       <button type="button" class="btn btn-primary" id="agregarRow"><i class="fas fa-plus"></i>
          Agregar producto</button>
       <br>
@@ -145,78 +145,93 @@
 
    <br>
    <form id="formTercerSeccion">
-      <div id="terceSeccion">
-         <div class="row">
-            <div class="col-xs-12 col-md-4">
-               <label for="encargadoCompra">Encargado de compra*</label>
-               <select class="form-control chosenPredictivo enable-disabled" name="selectEncargadoCompra"
-                  id="selectEncargadoCompra" required>
-                  <option selected="true" disabled="disabled">Seleccionar una opción</option>
-                  @foreach($empleados as $empleado)
-                  <option value='{{$empleado->kId}}'>{{$empleado->sNombre}} {{$empleado->sApellidos}}</option>
-                  @endforeach
-               </select>
-            </div>
-            <div class="col-xs-12 col-md-5">
-            </div>
-            <div class="col-xs-12 col-md-3">
-               <label for="totalAntesDescuento">Total antes del descuento</label>
-               <input type="number" class="form-control enable-disabled" id="inputTotalAntesDescuento"
-                  name="inputTotalAntesDescuento" disabled>
+      <div class="row">
+         <div class="col-xs-12 col-md-4">
+            <label for="encargadoCompra">Encargado de compra*</label>
+            <select class="form-control chosenPredictivo enable-disabled" name="selectEncargadoCompra"
+               id="selectEncargadoCompra" required>
+               <option selected="true" disabled="disabled">Seleccionar una opción</option>
+               @foreach($empleados as $empleado)
+               <option value='{{$empleado->kId}}'>{{$empleado->sNombre}} {{$empleado->sApellidos}}</option>
+               @endforeach
+            </select>
+         </div>
+         <div class="col-xs-12 col-md-5">
+         </div>
+         <div class="col-xs-12 col-md-3">
+            <label for="totalAntesDescuento">Total antes del descuento</label>
+            <input type="number" class="form-control enable-disabled" id="inputTotalAntesDescuento"
+               name="inputTotalAntesDescuento" disabled value="5000">
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-xs-12 col-md-4">
+            <label for="inputComentarios">Comentarios adicionales</label>
+            <textarea class="form-control enable-disabled" id="inputComentarios" name="inputComentarios" rows="2"
+               placeholder="Ingresa comentarios relacionados a la orden de compra"></textarea>
+         </div>
+         <div class="col-xs-12 col-md-5">
+         </div>
+         <div class="col-xs-12 col-md-3">
+            <label for="descuentoGral">Descuento</label>
+            <div class="form-inline">
+               <input type="text" class="form-control enable-disabled col-md-2" required value="50">
+               <h5><strong>&nbsp;%&nbsp; </strong></h5>
+               <input type="number" class="form-control enable-disabled col-md-9" id="inputDescuentoGral"
+                  name="inputDescuentoGral" disabled value="2500">
             </div>
          </div>
-         <div class="row">
-            <div class="col-xs-12 col-md-4">
-               <label for="inputComentarios">Comentarios adicionales</label>
-               <textarea class="form-control enable-disabled" id="inputComentarios" name="inputComentarios" rows="2"
-                  placeholder="Ingresa comentarios relacionados a la orden de compra"></textarea>
-            </div>
-            <div class="col-xs-12 col-md-5">
-            </div>
-            <div class="col-xs-12 col-md-3">
-               <label for="descuentoGral">Descuento</label>
-               <div class="form-inline">
-                  <input type="text" class="form-control enable-disabled col-md-1" required>
-                  <h5><strong>&nbsp;%&nbsp; </strong></h5>
-                  <input type="number" class="form-control enable-disabled col-md-9" id="inputDescuentoGral"
-                     name="inputDescuentoGral" disabled>
-               </div>
-            </div>
+      </div>
+      <div class="row">
+         <div class="col-xs-12 col-md-4">
          </div>
-         <div class="row">
-            <div class="col-xs-12 col-md-4">
-            </div>
-            <div class="col-xs-12 col-md-5">
-            </div>
-            <div class="col-xs-12 col-md-3">
-               <label for="impuesto">Impuesto</label>
-               <input type="number" class="form-control enable-disabled" id="inputImpuesto" name="inputImpuesto"
-                  disabled>
-            </div>
+         <div class="col-xs-12 col-md-5">
          </div>
-         <div class="row">
-            <div class="col-xs-12 col-md-4">
-            </div>
-            <div class="col-xs-12 col-md-5">
-            </div>
-            <div class="col-xs-12 col-md-3">
-               <label for="totalPagoVencido">Total pago vencido</label>
-               <input type="number" class="form-control enable-disabled" id="inputTotalPagoVencido"
-                  name="inputTotalPagoVencido" disabled>
+         <div class="col-xs-12 col-md-3">
+            <label for="impuesto">Impuesto</label>
+            <input type="number" class="form-control enable-disabled" id="inputImpuesto" name="inputImpuesto" disabled
+               value="16">
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-xs-12 col-md-4">
+         </div>
+         <div class="col-xs-12 col-md-5">
+         </div>
+         <div class="col-xs-12 col-md-3">
+            <label for="totalPagoVencido">Total pago vencido</label>
+            <input type="number" class="form-control enable-disabled" id="inputTotalPagoVencido"
+               name="inputTotalPagoVencido" disabled value="2300">
 
-            </div>
          </div>
       </div>
    </form>
 
-   <div class="renglon" id="btnAcciones">
-      <a class="btn btn-danger btnAcciones" href="{{ url('/ajaxProveedor') }}">Cancelar</a>
-      <button type="button" class="btn btn-warning btnAcciones" id="btnEditar"
-         onclick='editarProveedor()'>Editar</button>
-      <button type="button" class="btn btn-success btnAcciones" id="btnGuardar" disabled
-         onclick='actualizarProveedor()'>Guardar</button>
-   </div>
+   <table class="table table-bordered" id="tableOrden" hidden>
+      <thead>
+         <tr>
+            <th scope="col">nvoRegistro</th>
+            <th scope="col">idPedido</th>
+            <th scope="col">Descuento</th>
+            <th scope="col">AlmacenDestino</th>
+            <th scope="col">idProducto</th>
+            <th scope="col">ArtXunidad</th>
+            <th scope="col">Unidades</th>
+            <th scope="col">TotalCompra</th>
+         </tr>
+      </thead>
+      <tbody>
+      </tbody>
+   </table>
 </div>
+
+<div class="renglon" id="btnAcciones">
+   <a class="btn btn-danger btnAcciones" href="{{ url('/ajaxProveedor') }}">Cancelar</a>
+   <button type="button" class="btn btn-warning btnAcciones" id="btnEditar" onclick='editarProveedor()'>Editar</button>
+   <button type="button" class="btn btn-success btnAcciones" id="btnGuardar"
+      onclick='crearOrdenCompra()'>Guardar</button>
+</div>
+
 @endsection
 
 @section('script')
@@ -232,7 +247,6 @@ $(function() {
          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       }
    });
-   $("#agregarRow").click();
 });
 
 $("#selectProveedor").change(function() {
@@ -245,7 +259,7 @@ $("#selectProveedor").change(function() {
          id: idProveedor
       },
       success: function(data) {
-          
+
          if (data.success == 'true') {
             $("#inputRazonSocial").val(data.razonSocial['sRazonSocial']);
             $("#inputPersonaContacto").val(data.personaContacto['sPersonaContacto']);
@@ -261,9 +275,9 @@ $("#selectProveedor").change(function() {
 });
 
 function obtenDetalleProd(indice) {
-    
+
    $('#loading').show();
-   var id = "#selectClaveProducto" + indice;
+   var id = "#selectClaveProducto_" + indice;
    var idProducto = $(id).val();
    $.ajax({
       type: 'get',
@@ -272,7 +286,7 @@ function obtenDetalleProd(indice) {
          id: idProducto
       },
       success: function(data) {
-          
+
          if (data.success == 'true') {
             $("#inputDescProducto_" + indice).val(data.data['sDescripcion'])
             $("#inputPrecio_" + indice).val(data.data['dPrecioCompra'])
@@ -307,15 +321,38 @@ function calculaTotal(indice) {
 }
 
 function guardarRow(indice) {
-    
    $("#row_" + indice + " input").prop('disabled', true);
    $("#row_" + indice + " select").prop('disabled', true);
    $("#guardar_" + indice).attr("hidden", true);
    $("#editar_" + indice).attr("hidden", false);
+
+
+   var porcientoDescuen = ($("#inputPorcientoDescuento_" + indice).val() !== '') ? $("#inputPorcientoDescuento_" +
+      indice).val() : 0;
+   var idAlmacen = $("#selectAlmacen_" + indice + " option:selected").val();
+   var idProducto = $("#selectClaveProducto_" + indice + " option:selected").val();
+   var articulosUnidad = ($("#inputArtiXunidad_" + indice).val() !== '') ? $("#inputArtiXunidad_" + indice).val() : '';
+   var unidades = ($("#inputUnidades_" + indice).val() !== '') ? $("#inputUnidades_" + indice).val() : '';
+   var total = ($("#inputTotal_" + indice).val() !== '') ? $("#inputTotal_" + indice).val() : '';
+
+   if ($("#r" + indice).length) {
+      $("#r" + indice).remove();
+   }
+   var htmlTags = '<tr id="r' + indice + '">' +
+      '<td>nvoRegistro</td>' +
+      '<td></td>' +
+      '<td>' + porcientoDescuen + '</td>' +
+      '<td>' + idAlmacen + '</td>' +
+      '<td>' + idProducto + '</td>' +
+      '<td>' + articulosUnidad + '</td>' +
+      '<td>' + unidades + '</td>' +
+      '<td>' + total + '</td>' +
+      '</tr>';
+   $('#tableOrden tbody').append(htmlTags);
 }
 
 function editarRow(indice) {
-    
+
    $("#row_" + indice + " input").prop('disabled', false);
    $("#row_" + indice + " select").prop('disabled', false);
    $("#guardar_" + indice).attr("hidden", false);
@@ -331,13 +368,14 @@ $("#agregarRow").click(function() {
    nvoRegistro =
       '<tr id="row_' + rowCount + '">' +
       '<th scope="row">' + rowCount + '</th>' +
-      '<td><input type="number" class="form-control enable-disabled" id="inputPorcientoDescuento_' + rowCount +
+      '<td><input type="number" class="form-control enable-disabled" id="inputPorcientoDescuento_' +
+      rowCount +
       '" name="inputPorcientoDescuento_' + rowCount + '" placeholder="Ej: 15"></td>' +
       '<td> <select name="selectAlmacen_' + rowCount + '" id="selectAlmacen_' + rowCount +
       '" class="form-control chosenPredictivo">' +
       almacenes +
       '</select></td>' +
-      '<td><select name="selectClaveProducto_' + rowCount + '" id="selectClaveProducto' + rowCount +
+      '<td><select name="selectClaveProducto_' + rowCount + '" id="selectClaveProducto_' + rowCount +
       '" class="form-control chosenPredictivo" onchange="obtenDetalleProd(' + rowCount + ');">' +
       productos +
       '</select></td>' +
@@ -354,7 +392,8 @@ $("#agregarRow").click(function() {
       '" name="inputPrecio_' + rowCount + '" placeholder="Ej: 35.00" disabled></td>' +
       '<td> <input type="number" class="form-control enable-disabled" id="inputTotal_' + rowCount +
       '" name="inputTotal_' + rowCount + '" placeholder="Ej: 105.00" disabled></td>' +
-      '<td> <i class="far fa-save bigIcon" title="Guardar cambios" id="guardar_' + rowCount + '" name="guardar_' +
+      '<td> <i class="far fa-save bigIcon" title="Guardar cambios" id="guardar_' + rowCount +
+      '" name="guardar_' +
       rowCount + '" onclick="guardarRow(' + rowCount +
       ')"  style="cursor: pointer;"></i> ' +
       '<i class="fas fa-edit bigIcon" title="Editar Cambios" id="editar_' + rowCount + '" name="editar_' +
@@ -374,7 +413,8 @@ function getAlmacenes() {
       url: 'obtenerAlmacenes',
       success: function(data) {
          $.each(data, function(key, almacen) {
-            selectAlmacen = selectAlmacen + '<option value=' + almacen.kId + '>' + almacen.sAlmacen +
+            selectAlmacen = selectAlmacen + '<option value=' + almacen.kId + '>' + almacen
+               .sAlmacen +
                '</option>';
          });
       },
@@ -405,6 +445,61 @@ function getProductos() {
       }
    });
    return selectProductos;
+}
+
+function crearOrdenCompra() {
+   debugger;
+   var array = [];
+   var datosOrden = [];
+   var datosTotales = [];
+   /* Obtenemos todos los tr del Body*/
+   var rowsBody = $("#tableOrden").find('tbody > tr');
+   /* Obtenemos todos los th del Thead */
+   var rowsHead = $("#tableOrden").find('thead > tr > th');
+   /* Iteramos sobre as filas del tbody*/
+   for (var i = 0; i < rowsBody.length; i++) {
+      var obj = {}; /* auxiliar*/
+      for (var j = 0; j < rowsHead.length; j++) /*  Iteramos sobre los th de THead*/
+         /*Asignamos como clave el text del th del thead*/
+         /*Asignamos como Valor el text del tr del tbody*/
+         obj[rowsHead[j].innerText] = rowsBody[i].getElementsByTagName('td')[j].innerText;
+      array.push(obj); /* Añadimos al Array Principal*/
+   }
+
+   var dataOrdenCompra = $('#formPrimeraSeccion').serializeArray();
+   for (var i = 0; i < dataOrdenCompra.length; i++) {
+      var obj = {};
+      obj[dataOrdenCompra[i]['name']] = dataOrdenCompra[i]['value'];
+      datosOrden.push(obj);
+   }
+
+   var dataTotalesOrden = $('#formTercerSeccion').serializeArray();
+   for (var i = 0; i < dataTotalesOrden.length; i++) {
+      var obj = {};
+      obj[dataTotalesOrden[i]['name']] = dataTotalesOrden[i]['value'];
+      datosTotales.push(obj);
+   }
+
+   $.ajax({
+      type: 'POST',
+      url: "creaOrdenCompra",
+      data: {
+         datosOrden: datosOrden,
+         datosTotales: datosTotales,
+         productos: array,
+         funcion: 'crear'
+      },
+      success: function(data) {
+         $("#ordenCompra").empty();
+         $("#ordenCompra").append(data.html);
+         $('#loading').hide();
+         alert("Registro agregado correctamente");
+      },
+      error: function(data) {
+         console.log('Error:', data);
+         $('#loading').hide();
+      }
+   });
 }
 </script>
 @endsection

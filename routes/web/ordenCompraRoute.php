@@ -5,3 +5,5 @@ Route::get('obtenerDatosProducto/{id}', 'ordenCompraController@obtenerDatosProdu
 
 Route::post('obtenerAlmacenes', 'ordenCompraController@obtenerAlmacenes')->name('obtenerAlmacenes');
 Route::post('obtenerProductos', 'ordenCompraController@obtenerProductos')->name('obtenerProductos');
+
+Route::post('creaOrdenCompra', 'ordenCompraController@creaOrdenCompra')->name('creaOrdenCompra');
