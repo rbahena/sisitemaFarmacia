@@ -290,8 +290,14 @@ function obtenDetalleProd(indice) {
          if (data.success == 'true') {
             $("#inputDescProducto_" + indice).val(data.data['sDescripcion'])
             $("#inputPrecio_" + indice).val(data.data['dPrecioCompra'])
-            if (data.data['bImpIva'] != '0') {
-               $("#checkImpuesto_" + indice).toggleClass('fa-circle fa-check-circle');
+            
+            if (data.data['bImpIVA'] === '1') {
+               $( "#checkImpuesto_" + indice ).removeClass( 'fa-circle' );
+               $( "#checkImpuesto_" + indice ).addClass( 'fa-check-circle' );
+            }
+            else{
+               $( "#checkImpuesto_" + indice ).removeClass( 'fa-check-circle' );
+               $( "#checkImpuesto_" + indice ).addClass( 'fa-circle' );
             }
          }
          $('#loading').hide();
