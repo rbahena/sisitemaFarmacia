@@ -161,7 +161,8 @@
          <div class="col-xs-12 col-md-3">
             <label for="totalAntesDescuento">Total antes del descuento</label>
             <input type="number" class="form-control enable-disabled" id="inputTotalAntesDescuento"
-               name="inputTotalAntesDescuento" disabled value="5000">
+               name="inputTotalAntesDescuento" placeholder="Suma total" disabled value="0">
+               <!-- value="5000"-->
          </div>
       </div>
       <div class="row">
@@ -175,10 +176,10 @@
          <div class="col-xs-12 col-md-3">
             <label for="descuentoGral">Descuento</label>
             <div class="form-inline">
-               <input type="text" class="form-control enable-disabled col-md-2" required value="50">
-               <h5><strong>&nbsp;%&nbsp; </strong></h5>
-               <input type="number" class="form-control enable-disabled col-md-9" id="inputDescuentoGral"
-                  name="inputDescuentoGral" disabled value="2500">
+               <input id="iptPorcentajeDescuento" type="text" class="form-control enable-disabled col-md-2" required value="0" onchange="ActualizaTotalPG();">
+               <h5><strong>&nbsp;% &nbsp; =&nbsp; </strong></h5>
+               <input type="number" class="form-control enable-disabled col-md-8" id="inputDescuentoGral"
+                  name="inputDescuentoGral" disabled value="0">
             </div>
          </div>
       </div>
@@ -201,8 +202,8 @@
          <div class="col-xs-12 col-md-3">
             <label for="totalPagoVencido">Total pago vencido</label>
             <input type="number" class="form-control enable-disabled" id="inputTotalPagoVencido"
-               name="inputTotalPagoVencido" disabled value="2300">
-
+               name="inputTotalPagoVencido" disabled value="0">
+               <!--value="2300"-->
          </div>
       </div>
    </form>
@@ -275,6 +276,7 @@ $("#selectProveedor").change(function() {
 });
 
 function obtenDetalleProd(indice) {
+
 
    $('#loading').show();
    var id = "#selectClaveProducto_" + indice;
@@ -355,6 +357,11 @@ function guardarRow(indice) {
       '<td>' + total + '</td>' +
       '</tr>';
    $('#tableOrden tbody').append(htmlTags);
+
+   var totalAntesDescuento = $('#inputTotalAntesDescuento').val();
+   totalAntesDescuento = parseFloat(totalAntesDescuento) + parseFloat(total);
+
+   $('#inputTotalAntesDescuento').val(totalAntesDescuento);
 }
 
 function editarRow(indice) {
@@ -370,13 +377,16 @@ $("#agregarRow").click(function() {
    var almacenes = getAlmacenes();
    var productos = getProductos();
    var rowCount = $('#tableProdcutosOrden >tbody >tr').length + 1;
+
    // var rowCount = $('table#productosOrdenCompra tr:last').index() + 1;
    nvoRegistro =
       '<tr id="row_' + rowCount + '">' +
       '<th scope="row">' + rowCount + '</th>' +
-      '<td><input type="number" class="form-control enable-disabled" id="inputPorcientoDescuento_' +
-      rowCount +
-      '" name="inputPorcientoDescuento_' + rowCount + '" placeholder="Ej: 15"></td>' +
+      '<td>' +
+         '<input type="number" class="form-control enable-disabled" id="inputPorcientoDescuento_' + rowCount +
+            '" name="inputPorcientoDescuento_' + rowCount + '" placeholder="Ej: 15" min="0" max="100" ' 
+            + 'onchange="ValidaCamposRow(' + rowCount + ');calculaTotal(' + rowCount + ');">' +
+      '</td>' +
       '<td> <select name="selectAlmacen_' + rowCount + '" id="selectAlmacen_' + rowCount +
       '" class="form-control chosenPredictivo">' +
       almacenes +
@@ -388,10 +398,10 @@ $("#agregarRow").click(function() {
       '<td> <input type="text" class="form-control enable-disabled" id="inputDescProducto_' + rowCount +
       '" name="inputDescProducto_' + rowCount + '" placeholder="ej. Tabletas 90.10 Grms" disabled></td>' +
       '<td> <input type="number" class="form-control enable-disabled" id="inputArtiXunidad_' + rowCount +
-      '" name="inputArtiXunidad_' + rowCount + '" placeholder="Ej: 1000"></td>' +
+      '" name="inputArtiXunidad_' + rowCount + '" placeholder="Ej: 1000" min="0"></td>' +
       '<td> <input type="number" class="form-control enable-disabled" id="inputUnidades_' + rowCount +
       '" name="inputUnidades_' + rowCount + '" onchange="calculaTotal(' + rowCount +
-      ');" placeholder="ej. 40"></td>' +
+      ');" placeholder="ej. 40" min="0"></td>' +
       '<td> <div class="text-center"> <i class="far fa-circle bigIcon" id="checkImpuesto_' + rowCount +
       '" name ="checkImpuesto_' + rowCount + '" title="Si aplica impuesto"></i> </div> </td>' +
       '<td> <input type="number" class="form-control enable-disabled" id="inputPrecio_' + rowCount +
@@ -401,7 +411,7 @@ $("#agregarRow").click(function() {
       '<td> <i class="far fa-save bigIcon" title="Guardar cambios" id="guardar_' + rowCount +
       '" name="guardar_' +
       rowCount + '" onclick="guardarRow(' + rowCount +
-      ')"  style="cursor: pointer;"></i> ' +
+      ');ActualizaTotalPG();"  style="cursor: pointer;"></i> ' +
       '<i class="fas fa-edit bigIcon" title="Editar Cambios" id="editar_' + rowCount + '" name="editar_' +
       rowCount + '" onclick="editarRow(' + rowCount +
       ')"  style="cursor: pointer;" hidden></i></td>' +
@@ -507,5 +517,43 @@ function crearOrdenCompra() {
       }
    });
 }
+
+
+//Actualiza el total de pago vencido
+function ActualizaTotalPG(){
+   var TotalAD = document.getElementById('inputTotalAntesDescuento').value;
+   var PorcentajeDescuento = document.getElementById('iptPorcentajeDescuento').value;
+
+   //Actualiza el valor de descuento aplicado
+   var TotalDescuento = parseFloat(TotalAD) * parseFloat(PorcentajeDescuento)/100;
+   document.getElementById('inputDescuentoGral').value = TotalDescuento;
+
+   //Se obtiene el valor del impuesto aplicado
+   var impuesto = document.getElementById('inputImpuesto').value;
+   
+   //Actualiza el total de pago vencido
+   var TotalPagoVencido = document.getElementById('inputTotalPagoVencido').value;
+
+   document.getElementById('inputTotalPagoVencido').value = parseFloat(TotalAD) + parseFloat(TotalAD * impuesto/100) - parseFloat(TotalDescuento);   
+}
+
+
+function ValidaCamposRow(row){
+   var porcentaje = document.getElementById('inputPorcientoDescuento_' + row).value;
+   if(porcentaje < 0 || porcentaje > 100){
+      alert('El descuento debe estar entre 0 y 100 %');
+      document.getElementById('inputPorcientoDescuento_' + row).value = 0;
+      return;
+   }
+
+   var porcentaje = document.getElementById('inputArtiXunidad_' + row).value;
+   if(porcentaje < 0 || porcentaje > 100){
+      alert('Artículos por unidad debe ser mayor a 0');
+      document.getElementById('inputPorcientoDescuento_' + row).value = 0;
+      return;
+   }
+
+}
+
 </script>
 @endsection
